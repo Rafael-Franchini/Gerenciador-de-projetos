@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 class TelaLogin extends StatelessWidget {
   TelaLogin({super.key});
-  final  TextEditingController Email = TextEditingController();
-  final TextEditingController Senha = TextEditingController();
+  final  TextEditingController email = TextEditingController();
+  final TextEditingController senha = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,10 +15,21 @@ class TelaLogin extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+
+                    Image.asset(
+                      'assets/images/logobranca.png',
+                      width: 100,
+                      height: 100,
+                    ),
+                    SizedBox(
+                      height: 60,
+                    ),
                     TextField(
-                      controller: Email,
+                      controller: email,
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         labelText: 'Email',
                         labelStyle: TextStyle(
                           color: Color(0xFF327AEA),
@@ -30,9 +41,11 @@ class TelaLogin extends StatelessWidget {
                       height: 30,
                     ),
                     TextField(
-                      controller: Senha,
+                      controller: senha,
                       decoration: InputDecoration(
-                        border: OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
                         labelText: 'Senha',
                         labelStyle: TextStyle(
                           color: Color(0xFF327AEA),
@@ -41,17 +54,33 @@ class TelaLogin extends StatelessWidget {
                       obscureText: true,
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 60,
                     ),
                     ElevatedButton(
-                        onPressed: Login,
-                        child: Text(
-                          'Login' ,
-                          style: TextStyle(
-                              color: Color(0xFFFFFAFF),
-                              fontSize: 20,
+                        style: ElevatedButton.styleFrom(
+                          primary: Color(0xFF327AEA),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
+                        onPressed: Login,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal:60.0),
+                          child: Text(
+                            'Login' ,
+                            style: TextStyle(
+                                color: Color(0xFFFFFAFF),
+                                fontSize: 20,
+                            ),
+                          ),
+                        ),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    TextButton(
+                        onPressed: registrar,
+                        child: Text("Registrar-se"),
                     )
                   ],
                 ),
@@ -60,7 +89,10 @@ class TelaLogin extends StatelessWidget {
       );
   }
   void Login(){
-    print(Email.text);
-    print(Senha.text);
+    String senha= senha.text;
+    String email= email.text;
+  }
+  void registrar(){
+    print("Registrar");
   }
 }
