@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 
 class TelaLogin extends StatelessWidget {
   TelaLogin({super.key});
-  final  TextEditingController email = TextEditingController();
-  final TextEditingController senha = TextEditingController();
+  final  TextEditingController emails = TextEditingController();
+  final TextEditingController senhas = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFFFFAFF),
-      body: Center(
+      body: Scrollbar(
           child: Padding(
             padding: const EdgeInsets.all(30.0),
             child: Column(
@@ -18,21 +18,23 @@ class TelaLogin extends StatelessWidget {
 
                     Image.asset(
                       'assets/images/logobranca.png',
-                      width: 100,
-                      height: 100,
+                      width: 150,
+                      height: 150,
+                      isAntiAlias: true,
                     ),
                     SizedBox(
                       height: 60,
                     ),
                     TextField(
-                      controller: email,
+                      controller: emails,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                         labelText: 'Email',
                         labelStyle: TextStyle(
-                          color: Color(0xFF327AEA),
+                          overflow: TextOverflow.ellipsis,
+                          color: Color(0xFF30BCED),
                         ),
 
                       ),
@@ -41,14 +43,15 @@ class TelaLogin extends StatelessWidget {
                       height: 30,
                     ),
                     TextField(
-                      controller: senha,
+                      controller: senhas,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
                         ),
                         labelText: 'Senha',
                         labelStyle: TextStyle(
-                          color: Color(0xFF327AEA),
+                          overflow: TextOverflow.ellipsis,
+                          color: Color(0xFF30BCED),
                         ),
                       ),
                       obscureText: true,
@@ -58,12 +61,12 @@ class TelaLogin extends StatelessWidget {
                     ),
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Color(0xFF327AEA),
+                          primary: Color(0xFF30BCED),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        onPressed: Login,
+                        onPressed: login,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal:60.0),
                           child: Text(
@@ -76,21 +79,29 @@ class TelaLogin extends StatelessWidget {
                         ),
                     ),
                     SizedBox(
-                      height: 30,
+                      height: 60,
                     ),
                     TextButton(
-                        onPressed: registrar,
-                        child: Text("Registrar-se"),
-                    )
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+                        primary: Color(0xFF30BCED),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      onPressed: registrar,
+                      child: Text("Registrar-se"),
+                    ),
                   ],
                 ),
           ),
           ),
       );
   }
-  void Login(){
-    String senha= senha.text;
-    String email= email.text;
+  void login(){
+    String pass= senhas.text;
+    String email= emails.text;
+    print("Login");
   }
   void registrar(){
     print("Registrar");
