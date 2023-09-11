@@ -68,14 +68,14 @@ class TelaLogin extends StatelessWidget {
                         ),
                         onPressed: login,
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal:60.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 134.0, vertical: 15,),
                           child: Text(
-                            'Login' ,
-                            style: TextStyle(
-                                color: Color(0xFFFFFAFF),
-                                fontSize: 20,
+                              'Login' ,
+                              style: TextStyle(
+                                  color: Color(0xFFFFFAFF),
+                                  fontSize: 20,
+                              ),
                             ),
-                          ),
                         ),
                     ),
                     SizedBox(
@@ -84,6 +84,9 @@ class TelaLogin extends StatelessWidget {
                     TextButton(
                       style: TextButton.styleFrom(
                         padding: EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+                        textStyle: TextStyle(
+                          fontSize: 19,
+                        ),
                         primary: Color(0xFF30BCED),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
