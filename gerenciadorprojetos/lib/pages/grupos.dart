@@ -10,9 +10,10 @@ class Grupos extends StatefulWidget {
 class _GruposState extends State<Grupos> {
   @override
   String usuario = "Mauricio";
-  int ngrup = 1;
+  int ngrup = 5;
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFFFFFAFF),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -54,7 +55,7 @@ class _GruposState extends State<Grupos> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 62.0,
+                horizontal: 72.0,
                 vertical: 12,
               ),
               child: ElevatedButton(
@@ -66,13 +67,28 @@ class _GruposState extends State<Grupos> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
-                      Icon(Icons.add),
-                      Text("Criar Grupo"),
+                      Icon(
+                        Icons.add,
+                        size: 30,
+                      ),
+                      Text(
+                        "Criar Grupo",
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
             ),
+            Text(
+              "Lista de grupos : ",
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            )
+            //ListView(),
           ],
         ),
       ),
