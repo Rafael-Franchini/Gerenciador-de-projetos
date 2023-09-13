@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gerenciadorprojetos/pages/criagrupo.dart';
 import 'package:gerenciadorprojetos/pages/grupos.dart';
 import 'package:gerenciadorprojetos/pages/registrar.dart';
 import 'package:gerenciadorprojetos/pages/tela_login.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
         '/registrar': (context) => Registrar(),
         '/login': (context) => TelaLogin(),
         '/grupos': (context) => Grupos(),
+        '/criagrupo': (context) => CriaGrupo(),
       },
     );
   }
