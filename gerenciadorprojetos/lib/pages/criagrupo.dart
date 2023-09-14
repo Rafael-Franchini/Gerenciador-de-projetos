@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:gerenciadorprojetos/models/user.dart';
 
 class CriaGrupo extends StatelessWidget {
   CriaGrupo({super.key});
   final TextEditingController nomeG = TextEditingController();
   final TextEditingController emailG = TextEditingController();
+  late List<User> Usuarios;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

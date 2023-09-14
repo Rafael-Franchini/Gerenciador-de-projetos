@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gerenciadorprojetos/models/user.dart';
 
 class Registrar extends StatefulWidget {
   const Registrar({super.key});
@@ -7,6 +8,7 @@ class Registrar extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<Registrar> {
+  final TextEditingController nomes = TextEditingController();
   final TextEditingController emails = TextEditingController();
   final TextEditingController usernames = TextEditingController();
   final TextEditingController senhas = TextEditingController();
@@ -30,6 +32,23 @@ class _LoginScreenState extends State<Registrar> {
                   ),
                   SizedBox(
                     height: 60,
+                  ),
+                  TextField(
+                    controller: nomes,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      labelText: 'Nome',
+                      hintText: "Nome completo",
+                      labelStyle: TextStyle(
+                        overflow: TextOverflow.ellipsis,
+                        color: Color(0xFF30BCED),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
                   ),
                   TextField(
                     controller: emails,
@@ -139,6 +158,19 @@ class _LoginScreenState extends State<Registrar> {
     String pass = senhas.text;
     String email = emails.text;
     String username = usernames.text;
-    Navigator.of(context).pushNamed('/login');
+    String nome = nomes.text;
+    if (pass.isNotEmpty &&
+        email.isNotEmpty &&
+        username.isNotEmpty &&
+        nome.isNotEmpty) {
+      User novo = User(
+        Nome: nome,
+        Email: email,
+        Password: pass,
+        Usuario: username,
+        grupos: [],
+      );
+      Navigator.of(context).pushNamed('/login');
+    } else {}
   }
 }
