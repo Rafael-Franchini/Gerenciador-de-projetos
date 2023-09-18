@@ -8,9 +8,9 @@ class Grupos extends StatefulWidget {
 }
 
 class _GruposState extends State<Grupos> {
-  @override
   String usuario = "Mauricio";
   int ngrup = 5;
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFFFFAFF),

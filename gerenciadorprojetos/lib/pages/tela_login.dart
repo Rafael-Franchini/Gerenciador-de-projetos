@@ -69,6 +69,7 @@ class TelaLogin extends StatelessWidget {
                     onPressed: () {
                       String pass = senhas.text;
                       String email = emails.text;
+
                       Navigator.of(context).pushNamed('/grupos');
                     },
                     child: Padding(
