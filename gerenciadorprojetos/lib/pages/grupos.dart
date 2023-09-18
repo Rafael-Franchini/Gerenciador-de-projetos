@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gerenciadorprojetos/servicos/authserv.dart';
 
 class Grupos extends StatefulWidget {
   const Grupos({super.key});
@@ -9,6 +10,7 @@ class Grupos extends StatefulWidget {
 
 class _GruposState extends State<Grupos> {
   String usuario = "Mauricio";
+  AutenticacaoServico _autenS = AutenticacaoServico();
   int ngrup = 5;
   @override
   Widget build(BuildContext context) {
@@ -87,8 +89,23 @@ class _GruposState extends State<Grupos> {
               style: TextStyle(
                 fontSize: 16,
               ),
-            )
+            ),
             //ListView(),
+            SizedBox(
+              height: 30,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              child: SizedBox(
+                height: 30,
+                width: 300,
+                child: ElevatedButton(
+                    onPressed: () {
+                      _autenS.deslogar();
+                    },
+                    child: Text("Sair")),
+              ),
+            )
           ],
         ),
       ),

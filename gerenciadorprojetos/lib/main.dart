@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gerenciadorprojetos/pages/criagrupo.dart';
@@ -21,12 +22,30 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: TelaLogin(),
+      home: RoteadorTela(),
       routes: {
         '/registrar': (context) => Registrar(),
         '/login': (context) => TelaLogin(),
         '/grupos': (context) => Grupos(),
         '/criagrupo': (context) => CriaGrupo(),
+      },
+    );
+  }
+}
+
+class RoteadorTela extends StatelessWidget {
+  const RoteadorTela({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+      stream: FirebaseAuth.instance.userChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Grupos();
+        } else {
+          return TelaLogin();
+        }
       },
     );
   }
