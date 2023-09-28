@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:gerenciadorprojetos/_comum/meu_snackbar.dart';
 import 'package:gerenciadorprojetos/servicos/authserv.dart';
 
+import '../servicos/data.dart';
+
 class Registrar extends StatefulWidget {
   const Registrar({super.key});
   @override
@@ -12,7 +14,8 @@ class _LoginScreenState extends State<Registrar> {
   final TextEditingController nomes = TextEditingController();
   final TextEditingController emails = TextEditingController();
   final TextEditingController senhas = TextEditingController();
-  AutenticacaoServico _autenS = AutenticacaoServico();
+  final AutenticacaoServico _autenS = AutenticacaoServico();
+  final Data as = Data();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,7 +90,7 @@ class _LoginScreenState extends State<Registrar> {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF30BCED),
+                      backgroundColor: Color(0xFF30BCED),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -117,9 +120,7 @@ class _LoginScreenState extends State<Registrar> {
                           EdgeInsets.symmetric(horizontal: 60, vertical: 15),
                       textStyle: TextStyle(
                         fontSize: 20,
-                        color: Colors.green,
                       ),
-                      primary: Color(0xFF30BCED),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -127,7 +128,12 @@ class _LoginScreenState extends State<Registrar> {
                     onPressed: () {
                       Navigator.of(context).pushNamed('/login');
                     },
-                    child: Text("Login"),
+                    child: Text(
+                      "Login",
+                      style: TextStyle(
+                        color: Color(0xff30BCED),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -148,9 +154,9 @@ class _LoginScreenState extends State<Registrar> {
           .then((String? erro) {
         //voltou com erro
         if (erro != null) {
-          MostrarSnackbar(context: context, texto: erro);
+          mostrarSnackbar(context: context, texto: erro);
         } else {
-          MostrarSnackbar(
+          mostrarSnackbar(
               context: context,
               texto: "Cadastro executado com sucesso ",
               isErro: false);

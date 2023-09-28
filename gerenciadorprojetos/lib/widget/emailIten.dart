@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class EmailList extends StatelessWidget {
-  EmailList({
+  const EmailList({
     Key? key,
-    required this.Email,
+    required this.email,
     required this.onDelete,
   }) : super(key: key);
-  final String Email;
+  final String email;
   final Function(String) onDelete;
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class EmailList extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        Email,
+                        email,
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.grey[900],
@@ -41,7 +41,7 @@ class EmailList extends StatelessWidget {
                       height: 50,
                       child: ElevatedButton(
                         onPressed: () {
-                          onDelete(Email);
+                          onDelete(email);
                         },
                         child: Icon(
                           Icons.person_remove_outlined,

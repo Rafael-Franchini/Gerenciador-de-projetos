@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:gerenciadorprojetos/servicos/authserv.dart';
 
+import '../servicos/data.dart';
+
 class Grupos extends StatefulWidget {
   const Grupos({super.key});
-
   @override
   State<Grupos> createState() => _GruposState();
 }
 
 class _GruposState extends State<Grupos> {
-  String usuario = "Mauricio";
-  AutenticacaoServico _autenS = AutenticacaoServico();
-  int ngrup = 5;
+  final AutenticacaoServico _autenS = AutenticacaoServico();
+  Data as = Data();
+  int ngrup = 0;
   @override
   Widget build(BuildContext context) {
+    as.addUser();
     return Scaffold(
       backgroundColor: Color(0xFFFFFAFF),
       body: Padding(
@@ -28,7 +30,7 @@ class _GruposState extends State<Grupos> {
               ),
             ),
             Text(
-              "Ola $usuario",
+              "Ola ${_autenS.getNome()}",
               style: TextStyle(
                 fontSize: 18,
               ),
@@ -103,6 +105,9 @@ class _GruposState extends State<Grupos> {
                     onPressed: () {
                       _autenS.deslogar();
                     },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xffFC5130),
+                    ),
                     child: Text("Sair")),
               ),
             )

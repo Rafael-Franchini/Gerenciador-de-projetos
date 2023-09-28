@@ -2,29 +2,21 @@ import 'package:gerenciadorprojetos/models/grupo.dart';
 
 class User {
   User({
-    required this.Nome,
-    required this.Email,
-    required this.Password,
-    required this.Usuario,
+    required this.nome,
+    required this.usuario,
     required this.grupos,
   });
   User.fromJson(Map<dynamic, dynamic> json)
-      : Nome = json["Nome"],
-        Email = json["Email"],
-        Password = json["senha"],
-        Usuario = json["usuario"],
+      : nome = json["Nome"],
+        usuario = json["usuario"],
         grupos = json["grupos"];
-  String Nome;
-  String Email;
-  String Password;
-  String Usuario;
+  String nome;
+  String usuario;
   List<Grupo> grupos;
   Map<String, dynamic> toJson() {
     return {
-      "Nome": Nome,
-      "Email": Email,
-      "Password": Password,
-      "Usuario": Usuario,
+      "Nome": nome,
+      "Usuario": usuario,
       "grupos": grupos,
     };
   }

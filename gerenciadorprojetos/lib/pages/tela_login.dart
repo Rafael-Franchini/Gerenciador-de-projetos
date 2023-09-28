@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:gerenciadorprojetos/servicos/authserv.dart';
 
 import '../_comum/meu_snackbar.dart';
+import '../servicos/data.dart';
 
 class TelaLogin extends StatelessWidget {
   TelaLogin({super.key});
   final TextEditingController emails = TextEditingController();
   final TextEditingController senhas = TextEditingController();
-  AutenticacaoServico _autenS = AutenticacaoServico();
+  final AutenticacaoServico _autenS = AutenticacaoServico();
+  Data as = Data();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,12 +75,18 @@ class TelaLogin extends StatelessWidget {
                     onPressed: () async {
                       String pass = senhas.text;
                       String email = emails.text;
+
                       if (pass.isNotEmpty && email.isNotEmpty) {
-                        await _autenS.Login(email: email, password: pass)
+                        await _autenS
+                            .login(email: email, password: pass)
                             .then((String? erro) {
                           //voltou com erro
                           if (erro != null) {
-                            MostrarSnackbar(context: context, texto: erro);
+                            mostrarSnackbar(context: context, texto: erro);
+                          } else {
+                            if (pass.isNotEmpty && email.isNotEmpty) {
+                              Navigator.of(context).pushNamed("/grupos");
+                            }
                           }
                         });
                       }
@@ -105,10 +113,8 @@ class TelaLogin extends StatelessWidget {
                     style: TextButton.styleFrom(
                       padding:
                           EdgeInsets.symmetric(horizontal: 60, vertical: 15),
-                      textStyle: TextStyle(
-                        fontSize: 19,
-                      ),
-                      primary: Color(0xFF30BCED),
+                      textStyle: TextStyle(fontSize: 19, color: Colors.red),
+                      backgroundColor: Color(0xffFFFAFF),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -116,7 +122,10 @@ class TelaLogin extends StatelessWidget {
                     onPressed: () {
                       Navigator.of(context).pushNamed('/registrar');
                     },
-                    child: Text("Registrar-se"),
+                    child: Text(
+                      "Registrar-se",
+                      style: TextStyle(color: Color(0xff30BCED)),
+                    ),
                   ),
                 ],
               ),

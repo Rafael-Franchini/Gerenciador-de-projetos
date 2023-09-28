@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gerenciadorprojetos/widget/emailIten.dart';
 
+import '../servicos/authserv.dart';
+import '../servicos/data.dart';
+
 class CriaGrupo extends StatefulWidget {
-  CriaGrupo({super.key});
+  const CriaGrupo({super.key});
 
   @override
   State<CriaGrupo> createState() => _CriaGrupoState();
@@ -14,7 +17,9 @@ class _CriaGrupoState extends State<CriaGrupo> {
   final TextEditingController emailG = TextEditingController();
   String? deletedemail;
   int? deletedemailpos;
-  List<String> Usuarios = [];
+  List<String> usuarios = [];
+  Data as = Data();
+  final AutenticacaoServico _autenS = AutenticacaoServico();
 
   @override
   Widget build(BuildContext context) {
@@ -74,11 +79,12 @@ class _CriaGrupoState extends State<CriaGrupo> {
                       SizedBox(
                         height: 60,
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             String email = emailG.text;
+
                             if (email.isNotEmpty) {
                               setState(() {
-                                Usuarios.add(email);
+                                usuarios.add(email);
                               });
                             } else {}
                           },
@@ -100,15 +106,35 @@ class _CriaGrupoState extends State<CriaGrupo> {
                   ),
                 ),
                 SizedBox(
-                  height: 300,
+                  height: 500,
                   child: ListView(
                     children: [
-                      for (String user in Usuarios)
+                      for (String user in usuarios)
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 3.0),
-                          child: EmailList(Email: user, onDelete: onDelete),
+                          child: EmailList(email: user, onDelete: onDelete),
                         ),
                     ],
+                  ),
+                ),
+                SizedBox(
+                  height: 50,
+                  width: 500,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      String? nomet = _autenS.getNome();
+                      String nomeGr = nomeG.text;
+                      if (nomeGr != "") {
+                        Navigator.of(context).pushNamed("/grupos");
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                    ),
+                    child: Text(
+                      "Criar",
+                      style: TextStyle(fontSize: 25),
+                    ),
                   ),
                 ),
               ],
@@ -121,15 +147,15 @@ class _CriaGrupoState extends State<CriaGrupo> {
 
   void onDelete(String email) {
     deletedemail = email;
-    deletedemailpos = Usuarios.indexOf(email);
+    deletedemailpos = usuarios.indexOf(email);
     setState(() {
-      Usuarios.remove(email);
+      usuarios.remove(email);
     });
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
           content: Text(
-            "Tarefa ${email} foi removida com sucesso",
+            "Tarefa $email foi removida com sucesso",
             style: TextStyle(color: Colors.black),
           ),
           backgroundColor: Color(0xFFFFFAFF),
@@ -139,7 +165,7 @@ class _CriaGrupoState extends State<CriaGrupo> {
             textColor: Color(0xFF30BCED),
             onPressed: () {
               setState(() {
-                Usuarios.insert(deletedemailpos!, deletedemail!);
+                usuarios.insert(deletedemailpos!, deletedemail!);
               });
             },
           )),
