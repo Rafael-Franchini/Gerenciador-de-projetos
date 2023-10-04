@@ -1,72 +1,39 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:convert';
 
-class AutenticacaoServico {
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+import 'package:shared_preferences/shared_preferences.dart';
 
-  Future<String?> cadastrarUsuario({
-    required String nome,
-    required String email,
-    required String senha,
-  }) async {
-    try {
-      UserCredential userc = await _firebaseAuth.createUserWithEmailAndPassword(
-          email: email, password: senha);
-      await userc.user!.updateDisplayName(nome);
-      return null;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == "email-already-in-use") {
-        return "Email ja em uso";
-      }
-      if (e.code == "invalid-email") {
-        return "email Invalido";
-      }
-      if (e.code == "weak-password") {
-        return "senha muito curta";
-      }
-      return "Erro desconhecido";
-    }
+class utils {
+  utils({required this.tokens, required this.nome, required this.email});
+  utils.fromJson(Map<String, dynamic> json)
+      : tokens = json["token"],
+        nome = json["nome"],
+        email = json["email"];
+  String tokens;
+  String nome;
+  String email;
+  Map<String, dynamic> toJson() {
+    return {
+      "nome": nome,
+      "email": email,
+      "token": tokens,
+    };
+  }
+}
+
+const key = "logado";
+
+class UtilsRep {
+  late SharedPreferences sharedPreferences;
+
+  void saveTodolist(utils) {
+    final String jsonString = jsonEncode(utils);
+    sharedPreferences.setString(key, jsonString);
   }
 
-  void alterarSenha(email) {
-    _firebaseAuth.sendPasswordResetEmail(email: email);
-  }
-
-  Future<String?> login(
-      {required String email, required String password}) async {
-    try {
-      await _firebaseAuth.signInWithEmailAndPassword(
-          email: email, password: password);
-      return null;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == "invalid-email") {
-        return "email Invalido";
-      }
-      if (e.code == "INVALID_LOGIN_CREDENTIALS") {
-        return "senha invalida";
-      }
-      return "Erro desconhecido";
-    }
-  }
-
-  String? getNome() {
-    String? nome = _firebaseAuth.currentUser!.displayName;
-    if (nome != null) {
-      return nome;
-    } else {
-      return null;
-    }
-  }
-
-  String? getEmail() {
-    String? nome = _firebaseAuth.currentUser!.email;
-    if (nome != null) {
-      return nome;
-    } else {
-      return null;
-    }
-  }
-
-  Future<void> deslogar() async {
-    _firebaseAuth.signOut();
+  Future<List<utils>> getutils() async {
+    sharedPreferences = await SharedPreferences.getInstance();
+    final String jsonString = sharedPreferences.getString(key) ?? '[]';
+    final List jsonDecode = json.decode(jsonString) as List;
+    return jsonDecode.map((e) => utils.fromJson(e)).toList();
   }
 }

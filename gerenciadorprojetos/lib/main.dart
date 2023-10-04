@@ -1,5 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gerenciadorprojetos/pages/adicionarProj.dart';
 import 'package:gerenciadorprojetos/pages/atAtv.dart';
@@ -9,19 +7,15 @@ import 'package:gerenciadorprojetos/pages/projetoT.dart';
 import 'package:gerenciadorprojetos/pages/projetos.dart';
 import 'package:gerenciadorprojetos/pages/registrar.dart';
 import 'package:gerenciadorprojetos/pages/tela_login.dart';
-
-import 'firebase_options.dart';
+import 'package:gerenciadorprojetos/servicos/authserv.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -49,17 +43,24 @@ class RoteadorTela extends StatefulWidget {
 }
 
 class _RoteadorTelaState extends State<RoteadorTela> {
+  final UtilsRep utilsreps = UtilsRep();
+  List<utils> util = [];
+  @override
+  void initState() {
+    super.initState();
+    utilsreps.getutils().then((value) {
+      setState(() {
+        util = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<User?>(
-      stream: FirebaseAuth.instance.userChanges(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return Grupos();
-        } else {
-          return TelaLogin();
-        }
-      },
-    );
+    if (util[0].tokens != null) {
+      return Grupos();
+    } else {
+      return TelaLogin();
+    }
   }
 }

@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:gerenciadorprojetos/servicos/authserv.dart';
 
-import '../servicos/data.dart';
+import '../servicos/authserv.dart';
 
 class Grupos extends StatefulWidget {
   const Grupos({super.key});
+
   @override
   State<Grupos> createState() => _GruposState();
 }
 
 class _GruposState extends State<Grupos> {
-  final AutenticacaoServico _autenS = AutenticacaoServico();
-  Data as = Data();
-  int ngrup = 0;
+  final UtilsRep utilsreps = UtilsRep();
+  List<utils> util = [];
+  @override
+  void initState() {
+    super.initState();
+    utilsreps.getutils().then((value) {
+      setState(() {
+        util = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    as.addUser();
     return Scaffold(
       backgroundColor: Color(0xFFFFFAFF),
       body: Padding(
@@ -30,7 +38,7 @@ class _GruposState extends State<Grupos> {
               ),
             ),
             Text(
-              "Ola ${_autenS.getNome()}",
+              "Ola ${util[0].nome}",
               style: TextStyle(
                 fontSize: 18,
               ),
@@ -48,7 +56,7 @@ class _GruposState extends State<Grupos> {
                   ),
                 ),
                 Text(
-                  "$ngrup",
+                  "s",
                   style: TextStyle(
                     fontSize: 26,
                     fontWeight: FontWeight.w800,
@@ -63,6 +71,9 @@ class _GruposState extends State<Grupos> {
                 vertical: 12,
               ),
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xff30BCED),
+                ),
                 onPressed: () {
                   Navigator.of(context).pushNamed('/criagrupo');
                 },
@@ -92,7 +103,11 @@ class _GruposState extends State<Grupos> {
                 fontSize: 16,
               ),
             ),
-            //ListView(),
+            SizedBox(
+              width: 400,
+              height: 450,
+              child: ListView(),
+            ),
             SizedBox(
               height: 30,
             ),
@@ -102,9 +117,7 @@ class _GruposState extends State<Grupos> {
                 height: 30,
                 width: 300,
                 child: ElevatedButton(
-                    onPressed: () {
-                      _autenS.deslogar();
-                    },
+                    onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color(0xffFC5130),
                     ),

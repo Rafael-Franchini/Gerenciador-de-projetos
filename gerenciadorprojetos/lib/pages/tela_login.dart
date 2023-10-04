@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gerenciadorprojetos/servicos/authserv.dart';
-
-import '../_comum/meu_snackbar.dart';
-import '../servicos/data.dart';
 
 class TelaLogin extends StatelessWidget {
   TelaLogin({super.key});
   final TextEditingController emails = TextEditingController();
   final TextEditingController senhas = TextEditingController();
-  final AutenticacaoServico _autenS = AutenticacaoServico();
-  Data as = Data();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,21 +69,6 @@ class TelaLogin extends StatelessWidget {
                     onPressed: () async {
                       String pass = senhas.text;
                       String email = emails.text;
-
-                      if (pass.isNotEmpty && email.isNotEmpty) {
-                        await _autenS
-                            .login(email: email, password: pass)
-                            .then((String? erro) {
-                          //voltou com erro
-                          if (erro != null) {
-                            mostrarSnackbar(context: context, texto: erro);
-                          } else {
-                            if (pass.isNotEmpty && email.isNotEmpty) {
-                              Navigator.of(context).pushNamed("/grupos");
-                            }
-                          }
-                        });
-                      }
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(

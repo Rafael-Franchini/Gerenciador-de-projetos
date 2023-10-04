@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gerenciadorprojetos/_comum/meu_snackbar.dart';
-import 'package:gerenciadorprojetos/servicos/authserv.dart';
-
-import '../servicos/data.dart';
 
 class Registrar extends StatefulWidget {
   const Registrar({super.key});
@@ -14,8 +10,6 @@ class _LoginScreenState extends State<Registrar> {
   final TextEditingController nomes = TextEditingController();
   final TextEditingController emails = TextEditingController();
   final TextEditingController senhas = TextEditingController();
-  final AutenticacaoServico _autenS = AutenticacaoServico();
-  final Data as = Data();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,21 +143,6 @@ class _LoginScreenState extends State<Registrar> {
     String email = emails.text;
     String nome = nomes.text;
     if (pass.isNotEmpty && email.isNotEmpty && nome.isNotEmpty) {
-      _autenS
-          .cadastrarUsuario(nome: nome, email: email, senha: pass)
-          .then((String? erro) {
-        //voltou com erro
-        if (erro != null) {
-          mostrarSnackbar(context: context, texto: erro);
-        } else {
-          mostrarSnackbar(
-              context: context,
-              texto: "Cadastro executado com sucesso ",
-              isErro: false);
-          for (int i = 0; i < 10; i++) {}
-          Navigator.of(context).pushNamed('/login');
-        }
-      });
     } else {}
   }
 }

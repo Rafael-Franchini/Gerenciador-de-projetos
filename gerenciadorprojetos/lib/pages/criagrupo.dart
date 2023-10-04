@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gerenciadorprojetos/widget/emailIten.dart';
 
-import '../servicos/authserv.dart';
-import '../servicos/data.dart';
-
 class CriaGrupo extends StatefulWidget {
   const CriaGrupo({super.key});
 
@@ -18,8 +15,6 @@ class _CriaGrupoState extends State<CriaGrupo> {
   String? deletedemail;
   int? deletedemailpos;
   List<String> usuarios = [];
-  Data as = Data();
-  final AutenticacaoServico _autenS = AutenticacaoServico();
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +24,17 @@ class _CriaGrupoState extends State<CriaGrupo> {
         title: Text(
           "Criar grupo",
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                String nomeGr = nomeG.text;
+                if (nomeGr != "") {
+                  //as.criaGrupo(nomeGr, usuarios);
+                  Navigator.of(context).pushNamed("/grupos");
+                }
+              },
+              icon: Icon(Icons.check))
+        ],
       ),
       body: ListView(
         children: [
@@ -115,26 +121,6 @@ class _CriaGrupoState extends State<CriaGrupo> {
                           child: EmailList(email: user, onDelete: onDelete),
                         ),
                     ],
-                  ),
-                ),
-                SizedBox(
-                  height: 50,
-                  width: 500,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      String? nomet = _autenS.getNome();
-                      String nomeGr = nomeG.text;
-                      if (nomeGr != "") {
-                        Navigator.of(context).pushNamed("/grupos");
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
-                    ),
-                    child: Text(
-                      "Criar",
-                      style: TextStyle(fontSize: 25),
-                    ),
                   ),
                 ),
               ],
