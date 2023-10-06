@@ -1,21 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:gerenciadorprojetos/pages/GrupoOp.dart';
+import 'package:gerenciadorprojetos/pages/adicionarProj.dart';
+
+import '../models/projeto.dart';
+import '../servicos/authserv.dart';
 
 class Projetos extends StatefulWidget {
-  const Projetos({super.key});
+  final Map<String, dynamic> parametros;
+
+  Projetos({required this.parametros});
 
   @override
   State<Projetos> createState() => _ProjetosState();
 }
 
 class _ProjetosState extends State<Projetos> {
-  int nProj = 0;
+  final UtilsRep utilsreps = UtilsRep();
+  List<utils> util = [];
+  List<Projeto> projetos = [];
+
+  @override
+  void initState() {
+    super.initState();
+    utilsreps.getutils().then((value) {
+      setState(() {
+        util = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    String nome = widget.parametros['nome'];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff30BCED),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.refresh))],
-        title: Text("Grupo 1"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Map<String, dynamic> parametros = {
+                  'nome': '$nome',
+                };
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => GrupoOP(parametros: parametros),
+                  ),
+                );
+              },
+              icon: Icon(Icons.settings))
+        ],
+        title: Text("$nome"),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -37,8 +73,23 @@ class _ProjetosState extends State<Projetos> {
                   style: TextStyle(fontSize: 20),
                 ),
                 Text(
-                  "$nProj",
+                  "${projetos.length}",
                   style: TextStyle(color: Color(0xff30BCED), fontSize: 20),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                SizedBox(
+                  width: 55,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF30BCED),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                      ),
+                      onPressed: () {},
+                      child: Icon(Icons.refresh)),
                 )
               ],
             ),
@@ -47,7 +98,7 @@ class _ProjetosState extends State<Projetos> {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 SizedBox(
                   height: 10,
                   width: 10,
@@ -84,7 +135,17 @@ class _ProjetosState extends State<Projetos> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xff30BCED),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Map<String, dynamic> parametrost = {
+                      'nome': nome,
+                    };
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CriaProj(parametros: parametrost),
+                      ),
+                    );
+                  },
                   child: Text(
                     "Adicionar Projeto",
                     style: TextStyle(fontWeight: FontWeight.w900),

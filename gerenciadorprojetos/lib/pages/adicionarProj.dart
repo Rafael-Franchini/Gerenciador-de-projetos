@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CriaProj extends StatefulWidget {
-  const CriaProj({super.key});
+  const CriaProj({required this.parametros});
+  final Map<String, dynamic> parametros;
 
   @override
   State<CriaProj> createState() => _CriaProjState();

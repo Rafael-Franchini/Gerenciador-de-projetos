@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gerenciadorprojetos/pages/adicionarProj.dart';
-import 'package:gerenciadorprojetos/pages/atAtv.dart';
 import 'package:gerenciadorprojetos/pages/criagrupo.dart';
 import 'package:gerenciadorprojetos/pages/grupos.dart';
-import 'package:gerenciadorprojetos/pages/projetoT.dart';
-import 'package:gerenciadorprojetos/pages/projetos.dart';
 import 'package:gerenciadorprojetos/pages/registrar.dart';
 import 'package:gerenciadorprojetos/pages/tela_login.dart';
 import 'package:gerenciadorprojetos/servicos/authserv.dart';
@@ -26,10 +22,6 @@ class MyApp extends StatelessWidget {
         '/login': (context) => TelaLogin(),
         '/grupos': (context) => Grupos(),
         '/criagrupo': (context) => CriaGrupo(),
-        '/Projetos': (context) => Projetos(),
-        '/CriaProj': (context) => CriaProj(),
-        '/ProjetoT': (context) => ProjetoT(),
-        '/TelaAtv': (context) => AtvTela(),
       },
     );
   }
@@ -47,12 +39,12 @@ class _RoteadorTelaState extends State<RoteadorTela> {
   List<utils> util = [];
   @override
   void initState() {
-    super.initState();
     utilsreps.getutils().then((value) {
       setState(() {
         util = value;
       });
     });
+    super.initState();
   }
 
   @override

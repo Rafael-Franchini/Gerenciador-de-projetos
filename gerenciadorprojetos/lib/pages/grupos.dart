@@ -21,12 +21,28 @@ class _GruposState extends State<Grupos> {
 
   @override
   void initState() {
-    super.initState();
     utilsreps.getutils().then((value) {
       setState(() {
         util = value;
+        getGrupos();
       });
     });
+    super.initState();
+  }
+
+  bool verificarNome(List<Grupo> grupos, String nome) {
+    for (int i = 0; i < grupos.length; i++) {
+      if (grupos[i].nome == nome) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void adicionarSeNaoExistir(List<Grupo> grupos, Grupo novoTeste) {
+    if (!verificarNome(grupos, novoTeste.nome)) {
+      grupos.add(novoTeste);
+    }
   }
 
   void getGrupos() async {
@@ -46,9 +62,7 @@ class _GruposState extends State<Grupos> {
     );
 
     if (response.statusCode == 200) {
-      print(response.body);
       final Map<String, dynamic> jsonData = json.decode(response.body);
-      int i = 0;
       if (jsonData.containsKey('grupos')) {
         final List<dynamic> gruposData = jsonData['grupos'];
         final List docList =
@@ -57,26 +71,13 @@ class _GruposState extends State<Grupos> {
         // Agora você tem uma lista de objetos "doc" como Map<String, dynamic>
         for (final docData in docList) {
           // Acessar os campos individuais do objeto "doc"
-          final id = docData['_id'];
-          final rev = docData['_rev'];
           final nome = docData['nome'];
           final dono = docData['dono'];
 
           // Faça o que você precisa com os campos do objeto "doc"
           Grupo Teste = Grupo(
               dono: dono, nome: nome, projetos: [" "], participantes: [" "]);
-          if (grupos.length < 0) {
-            for (i; i <= grupos.length; i++) {
-              if (grupos[i].nome == Teste.nome) {
-                break;
-              }
-              if (i == grupos.length && grupos[i].nome != Teste.nome) {
-                grupos.add(Teste);
-              }
-            }
-          } else {
-            grupos.add(Teste);
-          }
+          adicionarSeNaoExistir(grupos, Teste);
         }
       }
     }
@@ -128,8 +129,15 @@ class _GruposState extends State<Grupos> {
                   width: 10,
                 ),
                 SizedBox(
-                  width: 50,
+                  width: 55,
                   child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF30BCED),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              50), // Define o raio desejado
+                        ),
+                      ),
                       onPressed: () {
                         getGrupos();
                       },

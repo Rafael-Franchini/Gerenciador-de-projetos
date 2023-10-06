@@ -65,14 +65,18 @@ class _CriaGrupoState extends State<CriaGrupo> {
                   );
 
                   if (response.statusCode == 200) {
+                    // ignore: use_build_context_synchronously
                     mostrarSnackbar(
                         context: context, texto: "grupo criado com sucesso");
+                    // ignore: use_build_context_synchronously
                     Navigator.of(context).pushNamed("/grupos");
                   } else {
+                    // ignore: use_build_context_synchronously
                     mostrarSnackbar(
                         context: context, texto: "${response.statusCode}");
                   }
 
+                  // ignore: use_build_context_synchronously
                   Navigator.of(context).pushNamed("/grupos");
                 }
               },

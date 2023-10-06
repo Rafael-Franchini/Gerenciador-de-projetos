@@ -84,7 +84,7 @@ class _TelaLoginState extends State<TelaLogin> {
                     obscureText: true,
                   ),
                   SizedBox(
-                    height: 60,
+                    height: 30,
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -114,12 +114,14 @@ class _TelaLoginState extends State<TelaLogin> {
                         );
 
                         if (response.statusCode == 200) {
+                          // ignore: use_build_context_synchronously
                           mostrarSnackbar(context: context, texto: "Logado");
                           utils as = utils.fromJson(json.decode(response.body));
                           util.add(as);
                           utilsreps.save(util);
                           Navigator.of(context).pushNamed("/grupos");
                         } else {
+                          // ignore: use_build_context_synchronously
                           mostrarSnackbar(
                               context: context,
                               texto: "${response.statusCode}");
@@ -128,7 +130,7 @@ class _TelaLoginState extends State<TelaLogin> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 124.0,
+                        horizontal: 94.0,
                         vertical: 15,
                       ),
                       child: Text(
@@ -141,13 +143,13 @@ class _TelaLoginState extends State<TelaLogin> {
                     ),
                   ),
                   SizedBox(
-                    height: 60,
+                    height: 30,
                   ),
                   Text("Não possui ?"),
                   TextButton(
                     style: TextButton.styleFrom(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 60, vertical: 15),
+                          EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                       textStyle: TextStyle(fontSize: 19, color: Colors.red),
                       backgroundColor: Color(0xffFFFAFF),
                       shape: RoundedRectangleBorder(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../models/grupo.dart';
+import '../pages/projetos.dart';
 
 class GrupoList extends StatelessWidget {
   const GrupoList({Key? key, required this.nome}) : super(key: key);
@@ -23,7 +24,19 @@ class GrupoList extends StatelessWidget {
                       child: SizedBox(
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Map<String, dynamic> parametros = {
+                              'nome': nome.nome,
+                            };
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    Projetos(parametros: parametros),
+                              ),
+                            );
+                          },
                           child: Text(
                             nome.nome.toUpperCase(),
                             style: TextStyle(
