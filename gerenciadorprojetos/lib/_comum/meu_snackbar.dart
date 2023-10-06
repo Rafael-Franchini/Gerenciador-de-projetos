@@ -11,13 +11,6 @@ mostrarSnackbar(
     ),
     backgroundColor: (isErro) ? Colors.red : Colors.green,
     duration: const Duration(seconds: 4),
-    action: SnackBarAction(
-      label: "Ok",
-      textColor: Colors.white,
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    ),
   );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }

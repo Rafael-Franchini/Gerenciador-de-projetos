@@ -3,29 +3,29 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class utils {
-  utils({required this.tokens, required this.nome, required this.email});
+  utils({required this.token, required this.nome, required this.email});
   utils.fromJson(Map<String, dynamic> json)
-      : tokens = json["token"],
-        nome = json["nome"],
-        email = json["email"];
-  String tokens;
+      : nome = json["nome"],
+        email = json["email"],
+        token = json["token"];
+  String token;
   String nome;
   String email;
   Map<String, dynamic> toJson() {
     return {
       "nome": nome,
       "email": email,
-      "token": tokens,
+      "token": token,
     };
   }
 }
 
-const key = "logado";
+const key = "util";
 
 class UtilsRep {
   late SharedPreferences sharedPreferences;
 
-  void saveTodolist(utils) {
+  void save(utils) {
     final String jsonString = jsonEncode(utils);
     sharedPreferences.setString(key, jsonString);
   }

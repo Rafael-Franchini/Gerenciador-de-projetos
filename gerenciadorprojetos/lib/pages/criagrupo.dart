@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:gerenciadorprojetos/widget/emailIten.dart';
+import 'package:http/http.dart' as http;
+
+import '../_comum/meu_snackbar.dart';
+import '../servicos/authserv.dart';
 
 class CriaGrupo extends StatefulWidget {
   const CriaGrupo({super.key});
@@ -15,6 +21,17 @@ class _CriaGrupoState extends State<CriaGrupo> {
   String? deletedemail;
   int? deletedemailpos;
   List<String> usuarios = [];
+  final UtilsRep utilsreps = UtilsRep();
+  List<utils> util = [];
+  @override
+  void initState() {
+    super.initState();
+    utilsreps.getutils().then((value) {
+      setState(() {
+        util = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +43,36 @@ class _CriaGrupoState extends State<CriaGrupo> {
         ),
         actions: [
           IconButton(
-              onPressed: () {
+              onPressed: () async {
                 String nomeGr = nomeG.text;
                 if (nomeGr != "") {
-                  //as.criaGrupo(nomeGr, usuarios);
+                  final Map<String, dynamic> data = {
+                    'nome': '$nomeGr',
+                    'dono': '${util[0].email}',
+                    'usuarios': '$usuarios',
+                  };
+
+                  const String apiUrl =
+                      "http://actionsolution.serveminecraft.net:9000/grupos/novo";
+
+                  final response = await http.post(
+                    Uri.parse(apiUrl),
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'x-auth-token': '${util[0].token}',
+                    },
+                    body: jsonEncode(data),
+                  );
+
+                  if (response.statusCode == 200) {
+                    mostrarSnackbar(
+                        context: context, texto: "grupo criado com sucesso");
+                    Navigator.of(context).pushNamed("/grupos");
+                  } else {
+                    mostrarSnackbar(
+                        context: context, texto: "${response.statusCode}");
+                  }
+
                   Navigator.of(context).pushNamed("/grupos");
                 }
               },
@@ -112,7 +155,7 @@ class _CriaGrupoState extends State<CriaGrupo> {
                   ),
                 ),
                 SizedBox(
-                  height: 500,
+                  height: 300,
                   child: ListView(
                     children: [
                       for (String user in usuarios)

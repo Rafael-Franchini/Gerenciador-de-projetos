@@ -1,9 +1,36 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-class TelaLogin extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:gerenciadorprojetos/_comum/meu_snackbar.dart';
+import 'package:http/http.dart' as http;
+
+import '../servicos/authserv.dart';
+
+class TelaLogin extends StatefulWidget {
   TelaLogin({super.key});
+
+  @override
+  State<TelaLogin> createState() => _TelaLoginState();
+}
+
+class _TelaLoginState extends State<TelaLogin> {
   final TextEditingController emails = TextEditingController();
+
   final TextEditingController senhas = TextEditingController();
+
+  final UtilsRep utilsreps = UtilsRep();
+
+  List<utils> util = [];
+  @override
+  void initState() {
+    super.initState();
+    utilsreps.getutils().then((value) {
+      setState(() {
+        util = value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,6 +96,35 @@ class TelaLogin extends StatelessWidget {
                     onPressed: () async {
                       String pass = senhas.text;
                       String email = emails.text;
+                      if (pass.isNotEmpty && email.isNotEmpty) {
+                        final Map<String, dynamic> data = {
+                          'email': '$email',
+                          'senha': '$pass',
+                        };
+
+                        const String apiUrl =
+                            "http://actionsolution.serveminecraft.net:9000/auth/login";
+
+                        final response = await http.post(
+                          Uri.parse(apiUrl),
+                          headers: {
+                            'Content-Type': 'application/json',
+                          },
+                          body: jsonEncode(data),
+                        );
+
+                        if (response.statusCode == 200) {
+                          mostrarSnackbar(context: context, texto: "Logado");
+                          utils as = utils.fromJson(json.decode(response.body));
+                          util.add(as);
+                          utilsreps.save(util);
+                          Navigator.of(context).pushNamed("/grupos");
+                        } else {
+                          mostrarSnackbar(
+                              context: context,
+                              texto: "${response.statusCode}");
+                        }
+                      }
                     },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(

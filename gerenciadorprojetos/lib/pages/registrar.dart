@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:gerenciadorprojetos/_comum/meu_snackbar.dart';
+import 'package:http/http.dart' as http;
 
 class Registrar extends StatefulWidget {
   const Registrar({super.key});
@@ -138,11 +142,35 @@ class _LoginScreenState extends State<Registrar> {
     );
   }
 
-  void registrar() {
+  void registrar() async {
     String pass = senhas.text;
     String email = emails.text;
     String nome = nomes.text;
     if (pass.isNotEmpty && email.isNotEmpty && nome.isNotEmpty) {
-    } else {}
+      final Map<String, dynamic> data = {
+        'nome': '$nome',
+        'email': '$email',
+        'senha': '$pass',
+      };
+
+      const String apiUrl =
+          "http://actionsolution.serveminecraft.net:9000/usuarios/novo";
+
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(data),
+      );
+
+      if (response.statusCode == 200) {
+        mostrarSnackbar(context: context, texto: "Usuario criado com sucesso");
+        Navigator.of(context).pushNamed("/login");
+        print(response.body);
+      } else {
+        mostrarSnackbar(context: context, texto: "${response.statusCode}");
+      }
+    }
   }
 }

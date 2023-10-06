@@ -57,7 +57,7 @@ class _RoteadorTelaState extends State<RoteadorTela> {
 
   @override
   Widget build(BuildContext context) {
-    if (util[0].tokens != null) {
+    if (util.isNotEmpty) {
       return Grupos();
     } else {
       return TelaLogin();
