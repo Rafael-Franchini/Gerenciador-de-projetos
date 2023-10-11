@@ -21,13 +21,13 @@ class _GruposState extends State<Grupos> {
 
   @override
   void initState() {
+    super.initState();
     utilsreps.getutils().then((value) {
       setState(() {
         util = value;
         getGrupos();
       });
     });
-    super.initState();
   }
 
   bool verificarNome(List<Grupo> grupos, String nome) {

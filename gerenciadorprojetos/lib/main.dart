@@ -39,12 +39,12 @@ class _RoteadorTelaState extends State<RoteadorTela> {
   List<utils> util = [];
   @override
   void initState() {
+    super.initState();
     utilsreps.getutils().then((value) {
       setState(() {
         util = value;
       });
     });
-    super.initState();
   }
 
   @override

@@ -23,12 +23,12 @@ class _GrupoOPState extends State<GrupoOP> {
   List<utils> util = [];
 
   @override
-  void initState() async {
+  void initState() {
+    super.initState();
     utilsreps.getutils().then((value) {
       setState(() {
         util = value;
       });
-      super.initState();
     });
   }
 
@@ -174,7 +174,7 @@ class _GrupoOPState extends State<GrupoOP> {
     };
 
     const String apiUrl =
-        "http://actionsolution.serveminecraft.net:9000/grupos/adicionar/usuario";
+        "http://actionsolution.serveminecraft.net:9000/grupos/remover/usuario";
 
     final response = await http.post(
       Uri.parse(apiUrl),
