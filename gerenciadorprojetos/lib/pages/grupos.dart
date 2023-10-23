@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:gerenciadorprojetos/_comum/meu_snackbar.dart';
 import 'package:gerenciadorprojetos/widget/gruposItens.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/grupo.dart';
-import '../servicos/authserv.dart';
+import '../rep-serv/authserv.dart';
 
 class Grupos extends StatefulWidget {
   const Grupos({super.key});
@@ -46,6 +47,8 @@ class _GruposState extends State<Grupos> {
   }
 
   void getGrupos() async {
+    String texto = "";
+    bool erro = false;
     final Map<String, dynamic> data = {
       'email': '${util[0].email}',
     };
@@ -80,7 +83,15 @@ class _GruposState extends State<Grupos> {
           adicionarSeNaoExistir(grupos, Teste);
         }
       }
+      erro = false;
+      texto = "Grupos encontrados";
     }
+    if (response.statusCode == 404) {
+      erro = true;
+      texto = "nao encontado nada";
+    }
+
+    mostrarSnackbar(context: context, texto: texto, isErro: erro);
     setState(() {});
   }
 
@@ -188,13 +199,14 @@ class _GruposState extends State<Grupos> {
               height: 450,
               child: ListView(
                 children: [
-                  for (Grupo grupo in grupos)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 3.0),
-                      child: GrupoList(
-                        nome: grupo,
+                  if (grupos.isNotEmpty)
+                    for (Grupo grupo in grupos)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 3.0),
+                        child: GrupoList(
+                          nome: grupo,
+                        ),
                       ),
-                    ),
                 ],
               ),
             ),

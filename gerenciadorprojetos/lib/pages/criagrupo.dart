@@ -5,7 +5,7 @@ import 'package:gerenciadorprojetos/widget/emailIten.dart';
 import 'package:http/http.dart' as http;
 
 import '../_comum/meu_snackbar.dart';
-import '../servicos/authserv.dart';
+import '../rep-serv/authserv.dart';
 
 class CriaGrupo extends StatefulWidget {
   const CriaGrupo({super.key});

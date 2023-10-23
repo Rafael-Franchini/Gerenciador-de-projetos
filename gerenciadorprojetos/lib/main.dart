@@ -3,7 +3,7 @@ import 'package:gerenciadorprojetos/pages/criagrupo.dart';
 import 'package:gerenciadorprojetos/pages/grupos.dart';
 import 'package:gerenciadorprojetos/pages/registrar.dart';
 import 'package:gerenciadorprojetos/pages/tela_login.dart';
-import 'package:gerenciadorprojetos/servicos/authserv.dart';
+import 'package:gerenciadorprojetos/rep-serv/authserv.dart';
 
 void main() async {
   runApp(MyApp());

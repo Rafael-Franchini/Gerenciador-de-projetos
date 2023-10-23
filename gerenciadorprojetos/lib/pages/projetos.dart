@@ -3,7 +3,7 @@ import 'package:gerenciadorprojetos/pages/GrupoOp.dart';
 import 'package:gerenciadorprojetos/pages/adicionarProj.dart';
 
 import '../models/projeto.dart';
-import '../servicos/authserv.dart';
+import '../rep-serv/authserv.dart';
 
 class Projetos extends StatefulWidget {
   final Map<String, dynamic> parametros;

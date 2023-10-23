@@ -5,7 +5,7 @@ import 'package:gerenciadorprojetos/pages/projetos.dart';
 import 'package:http/http.dart' as http;
 
 import '../_comum/meu_snackbar.dart';
-import '../servicos/authserv.dart';
+import '../rep-serv/authserv.dart';
 import '../widget/emailIten.dart';
 
 class GrupoOP extends StatefulWidget {

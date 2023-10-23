@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gerenciadorprojetos/_comum/meu_snackbar.dart';
 import 'package:http/http.dart' as http;
 
-import '../servicos/authserv.dart';
+import '../rep-serv/authserv.dart';
 
 class TelaLogin extends StatefulWidget {
   TelaLogin({super.key});
@@ -115,7 +115,8 @@ class _TelaLoginState extends State<TelaLogin> {
 
                         if (response.statusCode == 200) {
                           // ignore: use_build_context_synchronously
-                          mostrarSnackbar(context: context, texto: "Logado");
+                          mostrarSnackbar(
+                              context: context, texto: "Logado", isErro: false);
                           utils as = utils.fromJson(json.decode(response.body));
                           util.add(as);
                           utilsreps.save(util);
