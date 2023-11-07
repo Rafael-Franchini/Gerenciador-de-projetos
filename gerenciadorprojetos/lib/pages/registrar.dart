@@ -154,7 +154,7 @@ class _LoginScreenState extends State<Registrar> {
       };
 
       const String apiUrl =
-          "http://actionsolution.serveminecraft.net:9000/usuarios/novo";
+          "http://actionsolution.sytes.net:9000/usuarios/novo";
 
       final response = await http.post(
         Uri.parse(apiUrl),

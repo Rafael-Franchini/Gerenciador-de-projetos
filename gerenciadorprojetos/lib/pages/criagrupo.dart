@@ -53,7 +53,7 @@ class _CriaGrupoState extends State<CriaGrupo> {
                   };
 
                   const String apiUrl =
-                      "http://actionsolution.serveminecraft.net:9000/grupos/novo";
+                      "http://actionsolution.sytes.net:9000/grupos/novo";
 
                   final response = await http.post(
                     Uri.parse(apiUrl),

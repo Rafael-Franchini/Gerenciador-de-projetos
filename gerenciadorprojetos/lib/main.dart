@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gerenciadorprojetos/pages/adicionarProj.dart';
 import 'package:gerenciadorprojetos/pages/criagrupo.dart';
 import 'package:gerenciadorprojetos/pages/grupos.dart';
 import 'package:gerenciadorprojetos/pages/registrar.dart';
@@ -16,7 +17,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: RoteadorTela(),
+      home: CriaProj(
+        parametros: {},
+      ),
       routes: {
         '/registrar': (context) => Registrar(),
         '/login': (context) => TelaLogin(),
@@ -37,6 +40,7 @@ class RoteadorTela extends StatefulWidget {
 class _RoteadorTelaState extends State<RoteadorTela> {
   final UtilsRep utilsreps = UtilsRep();
   List<utils> util = [];
+
   @override
   void initState() {
     super.initState();

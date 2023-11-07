@@ -103,7 +103,7 @@ class _TelaLoginState extends State<TelaLogin> {
                         };
 
                         const String apiUrl =
-                            "http://actionsolution.serveminecraft.net:9000/auth/login";
+                            "http://actionsolution.sytes.net:9000/auth/login";
 
                         final response = await http.post(
                           Uri.parse(apiUrl),

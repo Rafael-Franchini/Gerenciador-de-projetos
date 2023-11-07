@@ -1,10 +1,9 @@
-import 'dart:convert';
+import 'dart:convert';//converter json
 
 import 'package:flutter/material.dart';
-import 'package:gerenciadorprojetos/_comum/meu_snackbar.dart';
-import 'package:gerenciadorprojetos/widget/gruposItens.dart';
-import 'package:http/http.dart' as http;
-
+import 'package:gerenciadorprojetos/_comum/meu_snackbar.dart';//mensagem embaixo da tela
+import 'package:gerenciadorprojetos/widget/gruposItens.dart';//widget grupo
+import 'package:http/http.dart' as http;//faz conexao
 import '../models/grupo.dart';
 import '../rep-serv/authserv.dart';
 
@@ -26,11 +25,12 @@ class _GruposState extends State<Grupos> {
     utilsreps.getutils().then((value) {
       setState(() {
         util = value;
+        // pega grupos existentes ao iniciar tela
         getGrupos();
       });
     });
   }
-
+//ve se grupo ja nao existe na lista,para nao ocorrer ter duplicidade de grupos
   bool verificarNome(List<Grupo> grupos, String nome) {
     for (int i = 0; i < grupos.length; i++) {
       if (grupos[i].nome == nome) {
@@ -39,13 +39,13 @@ class _GruposState extends State<Grupos> {
     }
     return false;
   }
-
+//usa a funcao acima e se nao existir ele adiciona
   void adicionarSeNaoExistir(List<Grupo> grupos, Grupo novoTeste) {
     if (!verificarNome(grupos, novoTeste.nome)) {
       grupos.add(novoTeste);
     }
   }
-
+  //pega grupos da api e converte em map usa a funcao a cima para ver se ja nao existe na lista de grupos
   void getGrupos() async {
     String texto = "";
     bool erro = false;
@@ -53,7 +53,7 @@ class _GruposState extends State<Grupos> {
       'email': '${util[0].email}',
     };
     const String apiUrl =
-        "http://actionsolution.serveminecraft.net:9000/grupos/todos";
+        "http://actionsolution.sytes.net:9000/grupos/todos";
 
     final response = await http.post(
       Uri.parse(apiUrl),
@@ -196,7 +196,7 @@ class _GruposState extends State<Grupos> {
             ),
             SizedBox(
               width: 300,
-              height: 450,
+              height: 399,
               child: ListView(
                 children: [
                   if (grupos.isNotEmpty)

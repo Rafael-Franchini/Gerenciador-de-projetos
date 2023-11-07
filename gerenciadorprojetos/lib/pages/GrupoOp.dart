@@ -111,7 +111,7 @@ class _GrupoOPState extends State<GrupoOP> {
                           };
 
                           const String apiUrl =
-                              "http://actionsolution.serveminecraft.net:9000/grupos/adicionar/usuario";
+                              "http://actionsolution.sytes.net:9000/grupos/adicionar/usuario";
 
                           final response = await http.post(
                             Uri.parse(apiUrl),
