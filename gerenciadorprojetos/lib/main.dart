@@ -17,9 +17,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CriaProj(
-        parametros: {},
-      ),
+      home: RoteadorTela(),
       routes: {
         '/registrar': (context) => Registrar(),
         '/login': (context) => TelaLogin(),

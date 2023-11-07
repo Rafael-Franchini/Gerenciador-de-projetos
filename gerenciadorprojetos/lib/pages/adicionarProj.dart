@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class CriaProj extends StatefulWidget {
   const CriaProj({required this.parametros});
+
   final Map<String, dynamic> parametros;
 
   @override
@@ -24,11 +25,11 @@ class _CriaProjState extends State<CriaProj> {
       backgroundColor: Color(0xFFFFFAFF),
       appBar: AppBar(
         actions: [
-          ElevatedButton(
+          IconButton(
             onPressed: () {
               Navigator.of(context).pushNamed('/Projetos');
             },
-            child: Icon(Icons.exit_to_app),
+            icon: Icon(Icons.exit_to_app),
           )
         ],
         title: Text(
