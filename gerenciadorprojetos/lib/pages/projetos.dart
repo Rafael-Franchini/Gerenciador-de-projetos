@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gerenciadorprojetos/models/grupo.dart';
 import 'package:gerenciadorprojetos/pages/GrupoOp.dart';
 import 'package:gerenciadorprojetos/pages/adicionarProj.dart';
 
@@ -6,7 +7,7 @@ import '../models/projeto.dart';
 import '../rep-serv/authserv.dart';
 
 class Projetos extends StatefulWidget {
-  final Map<String, dynamic> parametros;
+  final Grupo parametros;
 
   Projetos({required this.parametros});
 
@@ -31,17 +32,14 @@ class _ProjetosState extends State<Projetos> {
 
   @override
   Widget build(BuildContext context) {
-    String nome = widget.parametros['nome'];
+    Grupo g1 = widget.parametros;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff30BCED),
         actions: [
           IconButton(
               onPressed: () {
-                Map<String, dynamic> parametros = {
-                  'nome': '$nome',
-                };
-
+                Grupo parametros = g1;
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -51,7 +49,7 @@ class _ProjetosState extends State<Projetos> {
               },
               icon: Icon(Icons.settings))
         ],
-        title: Text("$nome"),
+        title: Text(g1.nome),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -137,7 +135,8 @@ class _ProjetosState extends State<Projetos> {
                   ),
                   onPressed: () {
                     Map<String, dynamic> parametrost = {
-                      'nome': nome,
+                      'nome': g1.nome,
+                      'dono': g1.dono,
                     };
                     Navigator.push(
                       context,

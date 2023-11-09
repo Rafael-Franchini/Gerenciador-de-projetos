@@ -1,4 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http; //faz conexao
+import '../_comum/meu_snackbar.dart';
+import '../rep-serv/authserv.dart';
 
 class CriaProj extends StatefulWidget {
   const CriaProj({required this.parametros});
@@ -10,26 +15,74 @@ class CriaProj extends StatefulWidget {
 }
 
 class _CriaProjState extends State<CriaProj> {
-  final TextEditingController nomeG = TextEditingController();
-
-  final TextEditingController emailG = TextEditingController();
+  final UtilsRep utilsreps = UtilsRep();
+  TextEditingController nomeProj = TextEditingController();
+  TextEditingController descricao = TextEditingController();
   String? deletedemail;
   int? deletedemailpos;
   List<String> usuarios = [];
+  List<utils> util = [];
 
-  get left => null;
+  @override
+  void initState() {
+    super.initState();
+    utilsreps.getutils().then((value) {
+      setState(() {
+        util = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFFFFAFF),
       appBar: AppBar(
+        backgroundColor: Color(0xff30BCED),
         actions: [
           IconButton(
-            onPressed: () {
+            onPressed: () async {
+              String nomeGr = nomeProj.text;
+              if (nomeProj != "") {
+                if (descricao != '') {
+                  final Map<String, dynamic> data = {
+                    'nome': '$nomeGr',
+                    'descricao': '$usuarios',
+                    'dono': '${util[0].email}',
+                  };
+
+                  const String apiUrl =
+                      "http://actionsolution.sytes.net:9000/projetos/novo";
+
+                  final response = await http.post(
+                    Uri.parse(apiUrl),
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'x-auth-token': '${util[0].token}',
+                    },
+                    body: jsonEncode(data),
+                  );
+
+                  if (response.statusCode == 200) {
+                    // ignore: use_build_context_synchronously
+                    mostrarSnackbar(
+                        context: context, texto: "grupo criado com sucesso");
+                    // ignore: use_build_context_synchronously
+                    Navigator.of(context).pushNamed("/grupos");
+                  } else {
+                    // ignore: use_build_context_synchronously
+                    mostrarSnackbar(
+                        context: context, texto: "${response.statusCode}");
+                  }
+
+                  // ignore: use_build_context_synchronously
+                  Navigator.of(context).pushNamed("/grupos");
+                }
+              }
+
               Navigator.of(context).pushNamed('/Projetos');
             },
-            icon: Icon(Icons.exit_to_app),
+            icon: Icon(Icons.check),
           )
         ],
         title: Text(
@@ -37,36 +90,43 @@ class _CriaProjState extends State<CriaProj> {
           textAlign: TextAlign.center,
         ),
       ),
-      body: const Column(
-        children: [],
-      ),
-    );
-  }
-
-  void onDelete(String email) {
-    deletedemail = email;
-    deletedemailpos = usuarios.indexOf(email);
-    setState(() {
-      usuarios.remove(email);
-    });
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          content: Text(
-            "Tarefa $email foi removida com sucesso",
-            style: TextStyle(color: Colors.black),
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                TextField(
+                  //controller: nomeProj,
+                  decoration: InputDecoration(
+                    labelText: "Nome do Projeto",
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  controller: nomeProj,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                TextField(
+                  //controller: nomeProj,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    labelText: "Descrição do Projeto",
+                  ),
+                  controller: descricao,
+                ),
+              ],
+            ),
           ),
-          backgroundColor: Color(0xFFFFFAFF),
-          duration: Duration(seconds: 5),
-          action: SnackBarAction(
-            label: "Desfazer",
-            textColor: Color(0xFF30BCED),
-            onPressed: () {
-              setState(() {
-                usuarios.insert(deletedemailpos!, deletedemail!);
-              });
-            },
-          )),
+        ],
+      ),
     );
   }
 }

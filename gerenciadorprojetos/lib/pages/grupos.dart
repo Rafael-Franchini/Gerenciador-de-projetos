@@ -1,9 +1,9 @@
-import 'dart:convert';//converter json
+import 'dart:convert'; //converter json
 
 import 'package:flutter/material.dart';
-import 'package:gerenciadorprojetos/_comum/meu_snackbar.dart';//mensagem embaixo da tela
-import 'package:gerenciadorprojetos/widget/gruposItens.dart';//widget grupo
-import 'package:http/http.dart' as http;//faz conexao
+import 'package:gerenciadorprojetos/_comum/meu_snackbar.dart'; //mensagem embaixo da tela
+import 'package:gerenciadorprojetos/widget/gruposItens.dart'; //widget grupo
+import 'package:http/http.dart' as http; //faz conexao
 import '../models/grupo.dart';
 import '../rep-serv/authserv.dart';
 
@@ -30,6 +30,7 @@ class _GruposState extends State<Grupos> {
       });
     });
   }
+
 //ve se grupo ja nao existe na lista,para nao ocorrer ter duplicidade de grupos
   bool verificarNome(List<Grupo> grupos, String nome) {
     for (int i = 0; i < grupos.length; i++) {
@@ -39,47 +40,50 @@ class _GruposState extends State<Grupos> {
     }
     return false;
   }
+
 //usa a funcao acima e se nao existir ele adiciona
   void adicionarSeNaoExistir(List<Grupo> grupos, Grupo novoTeste) {
     if (!verificarNome(grupos, novoTeste.nome)) {
       grupos.add(novoTeste);
     }
   }
+
   //pega grupos da api e converte em map usa a funcao a cima para ver se ja nao existe na lista de grupos
   void getGrupos() async {
     String texto = "";
     bool erro = false;
     final Map<String, dynamic> data = {
-      'email': '${util[0].email}',
+      'email': util[0].email,
     };
-    const String apiUrl =
-        "http://actionsolution.sytes.net:9000/grupos/todos";
+    const String apiUrl = "http://actionsolution.sytes.net:9000/grupos/todos";
 
     final response = await http.post(
       Uri.parse(apiUrl),
       headers: {
         'Content-Type': 'application/json',
-        'x-auth-token': '${util[0].token}',
+        'x-auth-token': util[0].token,
       },
       body: jsonEncode(data),
     );
-
+    print(response.body);
     if (response.statusCode == 200) {
       final Map<String, dynamic> jsonData = json.decode(response.body);
       if (jsonData.containsKey('grupos')) {
         final List<dynamic> gruposData = jsonData['grupos'];
-        final List docList =
-            gruposData.map((grupoData) => grupoData['doc']).toList();
 
         // Agora você tem uma lista de objetos "doc" como Map<String, dynamic>
-        for (final docData in docList) {
+        for (final docData in gruposData) {
           // Acessar os campos individuais do objeto "doc"
           final nome = docData['nome'];
           final dono = docData['dono'];
-
+          final id = docData['_id'];
           // Faça o que você precisa com os campos do objeto "doc"
           Grupo Teste = Grupo(
-              dono: dono, nome: nome, projetos: [" "], participantes: [" "]);
+              dono: dono,
+              nome: nome,
+              projetos: [" "],
+              participantes: [" "],
+              id: id);
           adicionarSeNaoExistir(grupos, Teste);
         }
       }
@@ -196,7 +200,7 @@ class _GruposState extends State<Grupos> {
             ),
             SizedBox(
               width: 300,
-              height: 399,
+              height: 0.85 / 2 * MediaQuery.of(context).size.height,
               child: ListView(
                 children: [
                   if (grupos.isNotEmpty)

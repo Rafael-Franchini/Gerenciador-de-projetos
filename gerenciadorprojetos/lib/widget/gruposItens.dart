@@ -6,6 +6,7 @@ import '../pages/projetos.dart';
 class GrupoList extends StatelessWidget {
   const GrupoList({Key? key, required this.nome}) : super(key: key);
   final Grupo nome;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,10 +26,7 @@ class GrupoList extends StatelessWidget {
                         height: 50,
                         child: ElevatedButton(
                           onPressed: () {
-                            Map<String, dynamic> parametros = {
-                              'nome': nome.nome,
-                            };
-
+                            Grupo parametros = nome;
                             Navigator.push(
                               context,
                               MaterialPageRoute(

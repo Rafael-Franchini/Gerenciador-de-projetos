@@ -5,11 +5,13 @@ import 'package:gerenciadorprojetos/pages/projetos.dart';
 import 'package:http/http.dart' as http;
 
 import '../_comum/meu_snackbar.dart';
+import '../models/grupo.dart';
 import '../rep-serv/authserv.dart';
 import '../widget/emailIten.dart';
 
 class GrupoOP extends StatefulWidget {
-  final Map<String, dynamic> parametros;
+  final Grupo parametros;
+
   const GrupoOP({required this.parametros});
 
   @override
@@ -24,9 +26,11 @@ class _GrupoOPState extends State<GrupoOP> {
 
   @override
   void initState() {
+    Grupo g1 = widget.parametros;
     super.initState();
     utilsreps.getutils().then((value) {
       setState(() {
+        usuarios = g1.participantes;
         util = value;
       });
     });
@@ -34,18 +38,16 @@ class _GrupoOPState extends State<GrupoOP> {
 
   @override
   Widget build(BuildContext context) {
-    String nome = widget.parametros['nome'];
+    Grupo g1 = widget.parametros;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff30BCED),
-        title: Text(nome),
+        title: Text(g1.nome),
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Map<String, dynamic> parametrost = {
-              'nome': nome,
-            };
+            Grupo parametrost = g1;
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -104,10 +106,10 @@ class _GrupoOPState extends State<GrupoOP> {
                         String email = emailG.text;
 
                         if (email.isNotEmpty) {
-                          String nomeGr = nome;
+                          String nomeGr = g1.nome;
                           final Map<String, dynamic> data = {
                             'nomeGrupo': nomeGr,
-                            'usuarios': email,
+                            'usuarios': [email],
                           };
 
                           const String apiUrl =
@@ -167,14 +169,14 @@ class _GrupoOPState extends State<GrupoOP> {
   }
 
   void onDelete(String email) async {
-    String nome = widget.parametros['nome'];
+    Grupo g1 = widget.parametros;
     final Map<String, dynamic> data = {
-      'nomeGrupo': nome,
+      'nomeGrupo': g1.nome,
       'usuarios': email,
     };
 
     const String apiUrl =
-        "http://actionsolution.serveminecraft.net:9000/grupos/remover/usuario";
+        "http://actionsolution.sytes.net:9000/grupos/remover/usuario";
 
     final response = await http.post(
       Uri.parse(apiUrl),
