@@ -35,6 +35,7 @@ class _CriaProjState extends State<CriaProj> {
 
   @override
   Widget build(BuildContext context) {
+    String nomeGrupo = widget.parametros['nome'];
     return Scaffold(
       backgroundColor: Color(0xFFFFFAFF),
       appBar: AppBar(
@@ -67,8 +68,27 @@ class _CriaProjState extends State<CriaProj> {
                     // ignore: use_build_context_synchronously
                     mostrarSnackbar(
                         context: context, texto: "grupo criado com sucesso");
-                    // ignore: use_build_context_synchronously
-                    Navigator.of(context).pushNamed("/grupos");
+                    final Map<String, dynamic> data = {
+                      'grupo': '$nomeGrupo',
+                      'projeto': '$nomeGr',
+                    };
+
+                    const String apiUrl =
+                        "http://actionsolution.sytes.net:9000/grupos/adicionar/projeto";
+
+                    final response = await http.post(
+                      Uri.parse(apiUrl),
+                      headers: {
+                        'Content-Type': 'application/json',
+                        'x-auth-token': '${util[0].token}',
+                      },
+                      body: jsonEncode(data),
+                    );
+                    if (response.statusCode == 200) {
+                    } else {
+                      mostrarSnackbar(
+                          context: context, texto: "${response.statusCode}");
+                    }
                   } else {
                     // ignore: use_build_context_synchronously
                     mostrarSnackbar(

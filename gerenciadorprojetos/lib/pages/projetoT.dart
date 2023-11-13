@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../models/projeto.dart';
+
 class ProjetoT extends StatefulWidget {
-  const ProjetoT({super.key});
+  const ProjetoT({required this.parametros});
+
+  final Projeto parametros;
 
   @override
   State<ProjetoT> createState() => _ProjetoTState();
@@ -9,6 +13,7 @@ class ProjetoT extends StatefulWidget {
 
 class _ProjetoTState extends State<ProjetoT> {
   String selectedValue = 'Opção 1';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

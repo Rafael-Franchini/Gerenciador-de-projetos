@@ -134,14 +134,14 @@ class _ProjetosState extends State<Projetos> {
                     backgroundColor: Color(0xff30BCED),
                   ),
                   onPressed: () {
-                    Map<String, dynamic> parametrost = {
+                    Map<String, dynamic> parametros = {
                       'nome': g1.nome,
                       'dono': g1.dono,
                     };
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => CriaProj(parametros: parametrost),
+                        builder: (context) => CriaProj(parametros: parametros),
                       ),
                     );
                   },
