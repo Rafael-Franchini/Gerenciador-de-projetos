@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:gerenciadorprojetos/pages/projetoT.dart';
 
+import '../models/grupo.dart';
 import '../models/projeto.dart';
 
-class GrupoList extends StatelessWidget {
-  const GrupoList({Key? key, required this.nome}) : super(key: key);
+class ProjList extends StatelessWidget {
+  const ProjList({
+    Key? key,
+    required this.nome,
+    required this.nome2,
+  }) : super(key: key);
   final Projeto nome;
+  final Grupo nome2;
 
   @override
   Widget build(BuildContext context) {
@@ -23,25 +29,39 @@ class GrupoList extends StatelessWidget {
                   children: [
                     Expanded(
                       child: SizedBox(
-                        height: 50,
+                        height: 70,
                         child: ElevatedButton(
                           onPressed: () {
                             Projeto parametros = nome;
+                            Grupo parametros2 = nome2;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    ProjetoT(parametros: parametros),
+                                builder: (context) => ProjetoT(
+                                    parametros1: parametros,
+                                    parametros2: parametros2),
                               ),
                             );
                           },
-                          child: Text(
-                            nome.nome.toUpperCase(),
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Color(0xFFFFFAFF),
-                              fontWeight: FontWeight.bold,
-                            ),
+                          child: Column(
+                            children: [
+                              Text(
+                                nome.nome.toUpperCase(),
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color(0xFFFFFAFF),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                nome.descricao,
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  color: Color(0xFFFFFAFF),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ),

@@ -65,6 +65,7 @@ class _GruposState extends State<Grupos> {
       },
       body: jsonEncode(data),
     );
+    print("token ${util[0].token}");
     print(response.body);
     if (response.statusCode == 200) {
       final Map<String, dynamic> jsonData = json.decode(response.body);

@@ -3,18 +3,22 @@ import 'package:gerenciadorprojetos/models/tarefa.dart';
 class Projeto {
   Projeto(
       {required this.nome,
+      required this.dono,
       required this.descricao,
       required this.tarefas,
       required this.dataE});
 
   Projeto.fromJson(Map<dynamic, dynamic> json)
       : nome = json["Nome"],
+        dono = json["dono"],
         descricao = json["Descricao"],
         tarefas = json["tarefas"],
         dataE = json["dataE"];
   String nome;
+  String dono;
   String descricao;
   List<Tarefa> tarefas;
+
   String dataE;
 
   void addParticipante(Tarefa tarefa) {
@@ -25,9 +29,14 @@ class Projeto {
     tarefas.remove(tarefa);
   }
 
+  int totalTarefas() {
+    return tarefas.length;
+  }
+
   Map<dynamic, dynamic> toJson() {
     return {
       "Nome": nome,
+      "dono": dono,
       "Descricao": descricao,
       "tarefas": tarefas,
       "dataE": dataE,

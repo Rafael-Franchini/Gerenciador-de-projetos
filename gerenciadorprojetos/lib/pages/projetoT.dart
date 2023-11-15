@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:gerenciadorprojetos/pages/ProjOp.dart';
+import 'package:gerenciadorprojetos/pages/projetos.dart';
 
+import '../models/grupo.dart';
 import '../models/projeto.dart';
+import 'CriaAtv.dart';
 
 class ProjetoT extends StatefulWidget {
-  const ProjetoT({required this.parametros});
+  const ProjetoT({required this.parametros1, required this.parametros2});
 
-  final Projeto parametros;
+  final Projeto parametros1;
+  final Grupo parametros2;
 
   @override
   State<ProjetoT> createState() => _ProjetoTState();
@@ -14,6 +19,8 @@ class ProjetoT extends StatefulWidget {
 class _ProjetoTState extends State<ProjetoT> {
   String selectedValue = 'Opção 1';
 
+  void getTarefas() async {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,13 +28,38 @@ class _ProjetoTState extends State<ProjetoT> {
         backgroundColor: Color(0xff30BCED),
         leading: IconButton(
           onPressed: () {
-            Navigator.of(context).pushNamed('/Projetos');
+            Grupo parametros = widget.parametros2;
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Projetos(parametros: parametros),
+              ),
+            );
           },
           icon: Icon(Icons.arrow_back),
         ),
-        actions: [IconButton(onPressed: () {}, icon: Icon(Icons.refresh))],
+        actions: [
+          IconButton(
+              onPressed: () {
+                getTarefas();
+              },
+              icon: Icon(Icons.refresh)),
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProjOp(
+                      parametros: widget.parametros1,
+                      parametros2: widget.parametros2,
+                    ),
+                  ),
+                );
+              },
+              icon: Icon(Icons.settings))
+        ],
         centerTitle: true,
-        title: Text("Projeto1"),
+        title: Text(widget.parametros1.nome),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -35,42 +67,28 @@ class _ProjetoTState extends State<ProjetoT> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Descrição",
+              "Descrição: ",
               style: TextStyle(
                 fontWeight: FontWeight.w500,
               ),
             ),
-            Text("Data"),
-            Text(
-              "Pessoas:",
-              style: TextStyle(fontWeight: FontWeight.w500),
-            ),
-            Text("Data"),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  "Data Entrega :  ",
-                  style: TextStyle(fontWeight: FontWeight.w500),
-                ),
-                Text("data"),
-              ],
-            ),
-            Row(
-              children: [
-                Text(
-                  "Concluido:  ",
-                  style: TextStyle(fontWeight: FontWeight.w500),
-                ),
-              ],
-            ),
+            Text(widget.parametros1.descricao),
             SizedBox(
               height: 10,
             ),
             SizedBox(
               width: 500,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CriaAtv(
+                          parametros1: widget.parametros1,
+                          parametros2: widget.parametros2),
+                    ),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xff30BCED),
                 ),

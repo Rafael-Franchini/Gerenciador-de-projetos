@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:gerenciadorprojetos/models/grupo.dart';
 import 'package:gerenciadorprojetos/pages/GrupoOp.dart';
 import 'package:gerenciadorprojetos/pages/adicionarProj.dart';
-
+import 'package:gerenciadorprojetos/widget/ProjIten.dart';
+import 'package:http/http.dart' as http; //faz conexao
+import '../_comum/meu_snackbar.dart';
 import '../models/projeto.dart';
 import '../rep-serv/authserv.dart';
 
@@ -18,7 +22,7 @@ class Projetos extends StatefulWidget {
 class _ProjetosState extends State<Projetos> {
   final UtilsRep utilsreps = UtilsRep();
   List<utils> util = [];
-  List<Projeto> projetos = [];
+  List<Projeto> projetoss = [];
 
   @override
   void initState() {
@@ -26,8 +30,80 @@ class _ProjetosState extends State<Projetos> {
     utilsreps.getutils().then((value) {
       setState(() {
         util = value;
+        getProjetos();
       });
     });
+  }
+
+  //ve se grupo ja nao existe na lista,para nao ocorrer ter duplicidade de grupos
+  bool verificarNome(List<Projeto> grupos, String nome) {
+    for (int i = 0; i < grupos.length; i++) {
+      if (grupos[i].nome == nome) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+//usa a funcao acima e se nao existir ele adiciona
+  void adicionarSeNaoExistir(List<Projeto> grupos, Projeto novoTeste) {
+    if (!verificarNome(grupos, novoTeste.nome)) {
+      projetoss.add(novoTeste);
+    }
+  }
+
+  void getProjetos() async {
+    Grupo g1 = widget.parametros;
+    String texto = "";
+    bool erro = false;
+    final Map<String, dynamic> data = {
+      "grupo": g1.nome,
+      'email': util[0].email,
+    };
+    const String apiUrl = "http://actionsolution.sytes.net:9000/projetos/todos";
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': util[0].token,
+      },
+      body: jsonEncode(data),
+    );
+    print(response.body);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> jsonData = json.decode(response.body);
+
+      if (jsonData.containsKey("projetos") && jsonData["projetos"] is List) {
+        final List<dynamic> gruposData = jsonData["projetos"];
+
+        for (final docData in gruposData) {
+          // Acessar os campos individuais do objeto "doc"
+          final nome = docData['nome'];
+          final dono = docData['dono'];
+          final descricao = docData['descricao'];
+          // Faça o que você precisa com os campos do objeto "doc"
+          Projeto Teste = Projeto(
+            nome: nome,
+            dono: dono,
+            descricao: descricao,
+            tarefas: [],
+            dataE: "",
+          );
+          adicionarSeNaoExistir(projetoss, Teste);
+        }
+      }
+
+      erro = false;
+      texto = "Projetos Encontrados";
+    }
+    if (response.statusCode == 404) {
+      erro = true;
+      texto = "nao encontado nada";
+    }
+
+    mostrarSnackbar(context: context, texto: texto, isErro: erro);
+    setState(() {});
   }
 
   @override
@@ -71,7 +147,7 @@ class _ProjetosState extends State<Projetos> {
                   style: TextStyle(fontSize: 20),
                 ),
                 Text(
-                  "${projetos.length}",
+                  "${projetoss.length}",
                   style: TextStyle(color: Color(0xff30BCED), fontSize: 20),
                 ),
                 SizedBox(
@@ -86,7 +162,9 @@ class _ProjetosState extends State<Projetos> {
                           borderRadius: BorderRadius.circular(50),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        getProjetos();
+                      },
                       child: Icon(Icons.refresh)),
                 )
               ],
@@ -130,25 +208,43 @@ class _ProjetosState extends State<Projetos> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50.0),
               child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xff30BCED),
-                  ),
-                  onPressed: () {
-                    Map<String, dynamic> parametros = {
-                      'nome': g1.nome,
-                      'dono': g1.dono,
-                    };
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CriaProj(parametros: parametros),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xff30BCED),
+                ),
+                onPressed: () {
+                  Map<String, dynamic> parametros = {
+                    'nome': g1.nome,
+                    'dono': g1.dono,
+                  };
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CriaProj(parametros: parametros),
+                    ),
+                  );
+                },
+                child: Text(
+                  "Adicionar Projeto",
+                  style: TextStyle(fontWeight: FontWeight.w900),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 300,
+              height: 0.85 / 2 * MediaQuery.of(context).size.height,
+              child: ListView(
+                children: [
+                  if (projetoss.isNotEmpty)
+                    for (Projeto grupo in projetoss)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 3.0),
+                        child: ProjList(
+                          nome: grupo,
+                          nome2: g1,
+                        ),
                       ),
-                    );
-                  },
-                  child: Text(
-                    "Adicionar Projeto",
-                    style: TextStyle(fontWeight: FontWeight.w900),
-                  )),
+                ],
+              ),
             ),
           ],
         ),

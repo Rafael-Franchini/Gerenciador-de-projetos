@@ -26,14 +26,65 @@ class _GrupoOPState extends State<GrupoOP> {
 
   @override
   void initState() {
-    Grupo g1 = widget.parametros;
     super.initState();
     utilsreps.getutils().then((value) {
       setState(() {
-        usuarios = g1.participantes;
         util = value;
+        getUsers();
       });
     });
+  }
+
+  bool verificarNome(List<String> grupos, String nome) {
+    for (int i = 0; i < grupos.length; i++) {
+      if (grupos[i] == nome) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+//usa a funcao acima e se nao existir ele adiciona
+  void adicionarSeNaoExistir(List<String> usuarios, String novoTeste) {
+    if (!verificarNome(usuarios, novoTeste)) {
+      usuarios.add(novoTeste);
+    }
+  }
+
+  void getUsers() async {
+    Grupo g1 = widget.parametros;
+    String texto = "";
+    bool erro = false;
+    final Map<String, dynamic> data = {
+      'grupo': g1.nome,
+    };
+    const String apiUrl =
+        "http://actionsolution.sytes.net:9000/grupos/todos/usuarios";
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': util[0].token,
+      },
+      body: jsonEncode(data),
+    );
+    print("token ${util[0].token}");
+    print(response.body);
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonData = json.decode(response.body);
+      if (jsonData.containsKey('usuarios')) {
+        final List<dynamic> gruposData = jsonData['usuarios'];
+
+        // Agora você tem uma lista de objetos "doc" como Map<String, dynamic>
+        for (final docData in gruposData) {
+          // Acessar os campos individuais do objeto "doc"
+          final String Teste = docData;
+          adicionarSeNaoExistir(usuarios, Teste);
+        }
+        setState(() {});
+      }
+    }
   }
 
   @override
@@ -62,19 +113,6 @@ class _GrupoOPState extends State<GrupoOP> {
           padding: const EdgeInsets.all(32.0),
           child: Column(
             children: [
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xffFC5130),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text("Deletar Grupo"),
-                    Icon(Icons.delete),
-                  ],
-                ),
-              ),
               SizedBox(
                 height: 10,
               ),
@@ -172,7 +210,7 @@ class _GrupoOPState extends State<GrupoOP> {
     Grupo g1 = widget.parametros;
     final Map<String, dynamic> data = {
       'nomeGrupo': g1.nome,
-      'usuarios': email,
+      'usuarios': [email],
     };
 
     const String apiUrl =

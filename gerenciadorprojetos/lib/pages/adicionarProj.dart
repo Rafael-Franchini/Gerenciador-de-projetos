@@ -44,11 +44,11 @@ class _CriaProjState extends State<CriaProj> {
           IconButton(
             onPressed: () async {
               String nomeGr = nomeProj.text;
-              if (nomeProj != "") {
-                if (descricao != '') {
+              if (nomeProj != null) {
+                if (descricao != null) {
                   final Map<String, dynamic> data = {
                     'nome': '$nomeGr',
-                    'descricao': '$usuarios',
+                    'descricao': '${descricao.text}',
                     'dono': '${util[0].email}',
                   };
 
@@ -67,7 +67,9 @@ class _CriaProjState extends State<CriaProj> {
                   if (response.statusCode == 200) {
                     // ignore: use_build_context_synchronously
                     mostrarSnackbar(
-                        context: context, texto: "grupo criado com sucesso");
+                        context: context,
+                        texto: "Projeto criado com sucesso",
+                        isErro: false);
                     final Map<String, dynamic> data = {
                       'grupo': '$nomeGrupo',
                       'projeto': '$nomeGr',
@@ -85,22 +87,20 @@ class _CriaProjState extends State<CriaProj> {
                       body: jsonEncode(data),
                     );
                     if (response.statusCode == 200) {
+                      Navigator.of(context).pushNamed("/Projetos");
                     } else {
+                      // ignore: use_build_context_synchronously
                       mostrarSnackbar(
                           context: context, texto: "${response.statusCode}");
                     }
+                    Navigator.of(context).pushNamed("/Projetos");
                   } else {
                     // ignore: use_build_context_synchronously
                     mostrarSnackbar(
                         context: context, texto: "${response.statusCode}");
                   }
-
-                  // ignore: use_build_context_synchronously
-                  Navigator.of(context).pushNamed("/grupos");
                 }
               }
-
-              Navigator.of(context).pushNamed('/Projetos');
             },
             icon: Icon(Icons.check),
           )
