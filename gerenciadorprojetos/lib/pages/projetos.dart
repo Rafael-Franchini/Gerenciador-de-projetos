@@ -58,7 +58,7 @@ class _ProjetosState extends State<Projetos> {
     bool erro = false;
     final Map<String, dynamic> data = {
       "grupo": g1.nome,
-      'email': util[0].email,
+      'usuario': util[0].email,
     };
     const String apiUrl = "http://actionsolution.sytes.net:9000/projetos/todos";
 
