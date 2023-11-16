@@ -71,7 +71,6 @@ class _ProjOpState extends State<ProjOp> {
       },
       body: jsonEncode(data),
     );
-    print(response.body);
   }
 
   @override
@@ -166,7 +165,7 @@ class _ProjOpState extends State<ProjOp> {
                           Projeto g1 = widget.parametros;
                           final Map<String, dynamic> data = {
                             'id': g1.id,
-                            'participante': util[0].email,
+                            'participante': emailG.text,
                           };
 
                           const String apiUrl =
