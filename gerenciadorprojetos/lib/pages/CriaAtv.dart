@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:gerenciadorprojetos/pages/projetoT.dart';
 
@@ -5,7 +7,8 @@ import '../models/grupo.dart';
 import '../models/projeto.dart';
 
 class CriaAtv extends StatefulWidget {
-  const CriaAtv({required this.parametros1, required this.parametros2});
+  const CriaAtv(
+      {super.key, required this.parametros1, required this.parametros2});
 
   final Projeto parametros1;
   final Grupo parametros2;

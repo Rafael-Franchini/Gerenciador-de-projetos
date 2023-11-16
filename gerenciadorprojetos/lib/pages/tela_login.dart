@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import '../rep-serv/authserv.dart';
 
 class TelaLogin extends StatefulWidget {
-  TelaLogin({super.key});
+  const TelaLogin({super.key});
 
   @override
   State<TelaLogin> createState() => _TelaLoginState();
@@ -21,6 +21,7 @@ class _TelaLoginState extends State<TelaLogin> {
   final UtilsRep utilsreps = UtilsRep();
 
   List<utils> util = [];
+
   @override
   void initState() {
     super.initState();
@@ -98,8 +99,8 @@ class _TelaLoginState extends State<TelaLogin> {
                       String email = emails.text;
                       if (pass.isNotEmpty && email.isNotEmpty) {
                         final Map<String, dynamic> data = {
-                          'email': '$email',
-                          'senha': '$pass',
+                          'email': email,
+                          'senha': pass,
                         };
 
                         const String apiUrl =
@@ -120,6 +121,7 @@ class _TelaLoginState extends State<TelaLogin> {
                           utils as = utils.fromJson(json.decode(response.body));
                           util.add(as);
                           utilsreps.save(util);
+                          // ignore: use_build_context_synchronously
                           Navigator.of(context).pushNamed("/grupos");
                         } else {
                           // ignore: use_build_context_synchronously

@@ -1,9 +1,11 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
 import '../models/tarefa.dart';
 
 class AtvTela extends StatelessWidget {
-  const AtvTela({required this.parametros});
+  const AtvTela({super.key, required this.parametros});
 
   final Tarefa parametros;
 

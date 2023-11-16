@@ -65,8 +65,6 @@ class _GruposState extends State<Grupos> {
       },
       body: jsonEncode(data),
     );
-    print("token ${util[0].token}");
-    print(response.body);
     if (response.statusCode == 200) {
       final Map<String, dynamic> jsonData = json.decode(response.body);
       if (jsonData.containsKey('grupos')) {
@@ -79,6 +77,7 @@ class _GruposState extends State<Grupos> {
           final dono = docData['dono'];
           final id = docData['_id'];
           // Faça o que você precisa com os campos do objeto "doc"
+          // ignore: non_constant_identifier_names
           Grupo Teste = Grupo(
               dono: dono,
               nome: nome,
@@ -96,6 +95,7 @@ class _GruposState extends State<Grupos> {
       texto = "nao encontado nada";
     }
 
+    // ignore: use_build_context_synchronously
     mostrarSnackbar(context: context, texto: texto, isErro: erro);
     setState(() {});
   }

@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 
 class Registrar extends StatefulWidget {
   const Registrar({super.key});
+
   @override
   State<Registrar> createState() => _LoginScreenState();
 }
@@ -14,6 +15,7 @@ class _LoginScreenState extends State<Registrar> {
   final TextEditingController nomes = TextEditingController();
   final TextEditingController emails = TextEditingController();
   final TextEditingController senhas = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,9 +150,9 @@ class _LoginScreenState extends State<Registrar> {
     String nome = nomes.text;
     if (pass.isNotEmpty && email.isNotEmpty && nome.isNotEmpty) {
       final Map<String, dynamic> data = {
-        'nome': '$nome',
-        'email': '$email',
-        'senha': '$pass',
+        'nome': nome,
+        'email': email,
+        'senha': pass,
       };
 
       const String apiUrl =
@@ -165,10 +167,12 @@ class _LoginScreenState extends State<Registrar> {
       );
 
       if (response.statusCode == 200) {
+        // ignore: use_build_context_synchronously
         mostrarSnackbar(context: context, texto: "Usuario criado com sucesso");
+        // ignore: use_build_context_synchronously
         Navigator.of(context).pushNamed("/login");
-        print(response.body);
       } else {
+        // ignore: use_build_context_synchronously
         mostrarSnackbar(context: context, texto: "${response.statusCode}");
       }
     }

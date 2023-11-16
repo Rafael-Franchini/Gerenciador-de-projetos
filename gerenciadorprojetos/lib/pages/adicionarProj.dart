@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -6,7 +8,7 @@ import '../_comum/meu_snackbar.dart';
 import '../rep-serv/authserv.dart';
 
 class CriaProj extends StatefulWidget {
-  const CriaProj({required this.parametros});
+  const CriaProj({super.key, required this.parametros});
 
   final Map<String, dynamic> parametros;
 
@@ -47,9 +49,9 @@ class _CriaProjState extends State<CriaProj> {
               if (nomeProj != null) {
                 if (descricao != null) {
                   final Map<String, dynamic> data = {
-                    'nome': '$nomeGr',
-                    'descricao': '${descricao.text}',
-                    'dono': '${util[0].email}',
+                    'nome': nomeGr,
+                    'descricao': descricao.text,
+                    'dono': util[0].email,
                   };
 
                   const String apiUrl =
@@ -59,7 +61,7 @@ class _CriaProjState extends State<CriaProj> {
                     Uri.parse(apiUrl),
                     headers: {
                       'Content-Type': 'application/json',
-                      'x-auth-token': '${util[0].token}',
+                      'x-auth-token': util[0].token,
                     },
                     body: jsonEncode(data),
                   );
@@ -71,8 +73,8 @@ class _CriaProjState extends State<CriaProj> {
                         texto: "Projeto criado com sucesso",
                         isErro: false);
                     final Map<String, dynamic> data = {
-                      'grupo': '$nomeGrupo',
-                      'projeto': '$nomeGr',
+                      'grupo': nomeGrupo,
+                      'projeto': nomeGr,
                     };
 
                     const String apiUrl =
@@ -82,17 +84,19 @@ class _CriaProjState extends State<CriaProj> {
                       Uri.parse(apiUrl),
                       headers: {
                         'Content-Type': 'application/json',
-                        'x-auth-token': '${util[0].token}',
+                        'x-auth-token': util[0].token,
                       },
                       body: jsonEncode(data),
                     );
                     if (response.statusCode == 200) {
+                      // ignore: use_build_context_synchronously
                       Navigator.of(context).pushNamed("/Projetos");
                     } else {
                       // ignore: use_build_context_synchronously
                       mostrarSnackbar(
                           context: context, texto: "${response.statusCode}");
                     }
+                    // ignore: use_build_context_synchronously
                     Navigator.of(context).pushNamed("/Projetos");
                   } else {
                     // ignore: use_build_context_synchronously

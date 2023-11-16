@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+// ignore: camel_case_types
 class utils {
   utils({required this.token, required this.nome, required this.email});
+
   utils.fromJson(Map<String, dynamic> json)
       : nome = json["nome"],
         email = json["email"],
@@ -11,6 +13,7 @@ class utils {
   String token;
   String nome;
   String email;
+
   Map<String, dynamic> toJson() {
     return {
       "nome": nome,
@@ -25,6 +28,7 @@ const key = "util";
 class UtilsRep {
   late SharedPreferences sharedPreferences;
 
+  // ignore: avoid_types_as_parameter_names
   void save(utils) {
     final String jsonString = jsonEncode(utils);
     sharedPreferences.setString(key, jsonString);

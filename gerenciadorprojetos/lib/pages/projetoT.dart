@@ -1,3 +1,6 @@
+// ignore: duplicate_ignore
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:gerenciadorprojetos/pages/ProjOp.dart';
 import 'package:gerenciadorprojetos/pages/projetos.dart';
@@ -7,7 +10,8 @@ import '../models/projeto.dart';
 import 'CriaAtv.dart';
 
 class ProjetoT extends StatefulWidget {
-  const ProjetoT({required this.parametros1, required this.parametros2});
+  const ProjetoT(
+      {super.key, required this.parametros1, required this.parametros2});
 
   final Projeto parametros1;
   final Grupo parametros2;

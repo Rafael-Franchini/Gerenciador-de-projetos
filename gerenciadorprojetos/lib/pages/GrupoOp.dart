@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -12,7 +14,7 @@ import '../widget/emailIten.dart';
 class GrupoOP extends StatefulWidget {
   final Grupo parametros;
 
-  const GrupoOP({required this.parametros});
+  const GrupoOP({super.key, required this.parametros});
 
   @override
   State<GrupoOP> createState() => _GrupoOPState();
@@ -53,8 +55,6 @@ class _GrupoOPState extends State<GrupoOP> {
 
   void getUsers() async {
     Grupo g1 = widget.parametros;
-    String texto = "";
-    bool erro = false;
     final Map<String, dynamic> data = {
       'grupo': g1.nome,
     };
@@ -69,8 +69,6 @@ class _GrupoOPState extends State<GrupoOP> {
       },
       body: jsonEncode(data),
     );
-    print("token ${util[0].token}");
-    print(response.body);
     if (response.statusCode == 200) {
       final Map<String, dynamic> jsonData = json.decode(response.body);
       if (jsonData.containsKey('usuarios')) {
@@ -79,6 +77,7 @@ class _GrupoOPState extends State<GrupoOP> {
         // Agora você tem uma lista de objetos "doc" como Map<String, dynamic>
         for (final docData in gruposData) {
           // Acessar os campos individuais do objeto "doc"
+          // ignore: non_constant_identifier_names
           final String Teste = docData;
           adicionarSeNaoExistir(usuarios, Teste);
         }
@@ -208,32 +207,36 @@ class _GrupoOPState extends State<GrupoOP> {
 
   void onDelete(String email) async {
     Grupo g1 = widget.parametros;
-    final Map<String, dynamic> data = {
-      'nomeGrupo': g1.nome,
-      'usuarios': [email],
-    };
+    if (g1.dono == util[0].email) {
+      final Map<String, dynamic> data = {
+        'nomeGrupo': g1.nome,
+        'usuarios': [email],
+      };
 
-    const String apiUrl =
-        "http://actionsolution.sytes.net:9000/grupos/remover/usuario";
+      const String apiUrl =
+          "http://actionsolution.sytes.net:9000/grupos/remover/usuario";
 
-    final response = await http.post(
-      Uri.parse(apiUrl),
-      headers: {
-        'Content-Type': 'application/json',
-        'x-auth-token': util[0].token,
-      },
-      body: jsonEncode(data),
-    );
-    if (response.statusCode == 200) {
-      // ignore: use_build_context_synchronously
-      mostrarSnackbar(context: context, texto: "Usuario deletado");
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {
+          'Content-Type': 'application/json',
+          'x-auth-token': util[0].token,
+        },
+        body: jsonEncode(data),
+      );
+      if (response.statusCode == 200) {
+        // ignore: use_build_context_synchronously
+        mostrarSnackbar(context: context, texto: "Usuario deletado");
+      } else {
+        // ignore: use_build_context_synchronously
+        mostrarSnackbar(context: context, texto: "${response.statusCode}");
+      }
+
+      setState(() {
+        usuarios.remove(email);
+      });
     } else {
-      // ignore: use_build_context_synchronously
-      mostrarSnackbar(context: context, texto: "${response.statusCode}");
+      mostrarSnackbar(context: context, texto: "Você não é o dono do grupo");
     }
-
-    setState(() {
-      usuarios.remove(email);
-    });
   }
 }

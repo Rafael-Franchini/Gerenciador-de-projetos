@@ -13,7 +13,7 @@ import '../rep-serv/authserv.dart';
 class Projetos extends StatefulWidget {
   final Grupo parametros;
 
-  Projetos({required this.parametros});
+  const Projetos({super.key, required this.parametros});
 
   @override
   State<Projetos> createState() => _ProjetosState();
@@ -70,7 +70,6 @@ class _ProjetosState extends State<Projetos> {
       },
       body: jsonEncode(data),
     );
-    print(response.body);
     if (response.statusCode == 200) {
       Map<String, dynamic> jsonData = json.decode(response.body);
 
@@ -82,8 +81,11 @@ class _ProjetosState extends State<Projetos> {
           final nome = docData['nome'];
           final dono = docData['dono'];
           final descricao = docData['descricao'];
+          final id = docData['_id'];
           // Faça o que você precisa com os campos do objeto "doc"
+          // ignore: non_constant_identifier_names
           Projeto Teste = Projeto(
+            id: id,
             nome: nome,
             dono: dono,
             descricao: descricao,
@@ -102,6 +104,7 @@ class _ProjetosState extends State<Projetos> {
       texto = "nao encontado nada";
     }
 
+    // ignore: use_build_context_synchronously
     mostrarSnackbar(context: context, texto: texto, isErro: erro);
     setState(() {});
   }

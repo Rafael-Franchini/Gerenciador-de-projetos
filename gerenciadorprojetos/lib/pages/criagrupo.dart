@@ -23,6 +23,7 @@ class _CriaGrupoState extends State<CriaGrupo> {
   List<String> usuarios = [];
   final UtilsRep utilsreps = UtilsRep();
   List<utils> util = [];
+
   @override
   void initState() {
     super.initState();
@@ -47,8 +48,8 @@ class _CriaGrupoState extends State<CriaGrupo> {
                 String nomeGr = nomeG.text;
                 if (nomeGr != "") {
                   final Map<String, dynamic> data = {
-                    'nome': '$nomeGr',
-                    'dono': '${util[0].email}',
+                    'nome': nomeGr,
+                    'dono': util[0].email,
                     'usuarios': '$usuarios',
                   };
 
@@ -59,7 +60,7 @@ class _CriaGrupoState extends State<CriaGrupo> {
                     Uri.parse(apiUrl),
                     headers: {
                       'Content-Type': 'application/json',
-                      'x-auth-token': '${util[0].token}',
+                      'x-auth-token': util[0].token,
                     },
                     body: jsonEncode(data),
                   );
