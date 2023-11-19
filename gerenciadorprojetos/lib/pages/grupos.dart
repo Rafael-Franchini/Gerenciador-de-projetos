@@ -87,16 +87,13 @@ class _GruposState extends State<Grupos> {
           adicionarSeNaoExistir(grupos, Teste);
         }
       }
-      erro = false;
-      texto = "Grupos encontrados";
     }
     if (response.statusCode == 404) {
       erro = true;
       texto = "nao encontado nada";
+      // ignore: use_build_context_synchronously
+      mostrarSnackbar(context: context, texto: texto, isErro: erro);
     }
-
-    // ignore: use_build_context_synchronously
-    mostrarSnackbar(context: context, texto: texto, isErro: erro);
     setState(() {});
   }
 

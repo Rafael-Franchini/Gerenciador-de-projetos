@@ -39,12 +39,6 @@ class GrupoList extends StatelessWidget {
                           },
                           child: Column(
                             children: [
-                              Text(nome.prioridade,
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Color(0xFFFFFAFF),
-                                    fontWeight: FontWeight.bold,
-                                  )),
                               Text(
                                 nome.title,
                                 style: TextStyle(

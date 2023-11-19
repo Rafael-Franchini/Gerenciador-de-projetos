@@ -43,6 +43,12 @@ class EmailList extends StatelessWidget {
                       width: 50,
                       height: 50,
                       child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                        ),
                         onPressed: () {
                           onDelete(email);
                         },

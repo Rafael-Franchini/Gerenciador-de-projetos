@@ -46,8 +46,8 @@ class _CriaProjState extends State<CriaProj> {
           IconButton(
             onPressed: () async {
               String nomeGr = nomeProj.text;
-              if (nomeProj != null) {
-                if (descricao != null) {
+              if (nomeProj.text.isNotEmpty) {
+                if (descricao.text.isNotEmpty) {
                   final Map<String, dynamic> data = {
                     'nome': nomeGr,
                     'descricao': descricao.text,

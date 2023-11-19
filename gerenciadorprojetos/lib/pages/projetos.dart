@@ -95,17 +95,13 @@ class _ProjetosState extends State<Projetos> {
           adicionarSeNaoExistir(projetoss, Teste);
         }
       }
-
-      erro = false;
-      texto = "Projetos Encontrados";
     }
     if (response.statusCode == 404) {
       erro = true;
       texto = "nao encontado nada";
+      // ignore: use_build_context_synchronously
+      mostrarSnackbar(context: context, texto: texto, isErro: erro);
     }
-
-    // ignore: use_build_context_synchronously
-    mostrarSnackbar(context: context, texto: texto, isErro: erro);
     setState(() {});
   }
 

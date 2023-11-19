@@ -1,13 +1,17 @@
 // ignore: duplicate_ignore
 // ignore_for_file: file_names
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:gerenciadorprojetos/pages/ProjOp.dart';
+import 'package:gerenciadorprojetos/pages/grupos.dart';
 import 'package:gerenciadorprojetos/pages/projetos.dart';
 
 import '../models/grupo.dart';
 import '../models/projeto.dart';
+import '../rep-serv/authserv.dart';
 import 'CriaAtv.dart';
+import 'package:http/http.dart' as http; //faz conexao
 
 class ProjetoT extends StatefulWidget {
   const ProjetoT(
@@ -22,8 +26,21 @@ class ProjetoT extends StatefulWidget {
 
 class _ProjetoTState extends State<ProjetoT> {
   String selectedValue = 'Opção 1';
+  final UtilsRep utilsreps = UtilsRep();
+  List<utils> util = [];
+  List<Projeto> projetoss = [];
 
   void getTarefas() async {}
+
+  @override
+  void initState() {
+    super.initState();
+    utilsreps.getutils().then((value) {
+      setState(() {
+        util = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,19 +65,6 @@ class _ProjetoTState extends State<ProjetoT> {
                 getTarefas();
               },
               icon: Icon(Icons.refresh)),
-          IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProjOp(
-                      parametros: widget.parametros1,
-                      parametros2: widget.parametros2,
-                    ),
-                  ),
-                );
-              },
-              icon: Icon(Icons.settings))
         ],
         centerTitle: true,
         title: Text(widget.parametros1.nome),
@@ -70,6 +74,43 @@ class _ProjetoTState extends State<ProjetoT> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xffFC5130),
+              ),
+              onPressed: () async {
+                Grupo g1 = widget.parametros2;
+                Projeto g2 = widget.parametros1;
+                if (util[0].email == g1.dono) {
+                  final Map<String, dynamic> data = {
+                    'grupo': g1.nome,
+                    'projeto': g2.nome,
+                  };
+                  const String apiUrl =
+                      "http://actionsolution.sytes.net:9000/grupos/remover/projeto";
+
+                  final response = await http.post(
+                    Uri.parse(apiUrl),
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'x-auth-token': util[0].token,
+                    },
+                    body: jsonEncode(data),
+                  );
+                  print(response.body);
+                  // ignore: use_build_context_synchronously
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Grupos(),
+                    ),
+                  );
+                }
+              },
+              child: Row(
+                children: const [Text("Deletar Projeto"), Icon(Icons.delete)],
+              ),
+            ),
             Text(
               "Descrição: ",
               style: TextStyle(

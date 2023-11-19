@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:gerenciadorprojetos/widget/emailIten.dart';
 import 'package:http/http.dart' as http;
 
 import '../_comum/meu_snackbar.dart';
@@ -18,9 +17,6 @@ class _CriaGrupoState extends State<CriaGrupo> {
   final TextEditingController nomeG = TextEditingController();
 
   final TextEditingController emailG = TextEditingController();
-  String? deletedemail;
-  int? deletedemailpos;
-  List<String> usuarios = [];
   final UtilsRep utilsreps = UtilsRep();
   List<utils> util = [];
 
@@ -50,7 +46,7 @@ class _CriaGrupoState extends State<CriaGrupo> {
                   final Map<String, dynamic> data = {
                     'nome': nomeGr,
                     'dono': util[0].email,
-                    'usuarios': '$usuarios',
+                    'usuarios': '',
                   };
 
                   const String apiUrl =
@@ -107,102 +103,19 @@ class _CriaGrupoState extends State<CriaGrupo> {
                     ),
                   ),
                 ),
+                SizedBox(
+                  height: 30,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 18.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          controller: emailG,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            labelText: 'Email dos integrantes',
-                            hintText: "Exemplo@exemplo.com",
-                            labelStyle: TextStyle(
-                              overflow: TextOverflow.ellipsis,
-                              color: Color(0xFF30BCED),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 2,
-                      ),
-                      SizedBox(
-                        height: 60,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            String email = emailG.text;
-
-                            if (email.isNotEmpty) {
-                              setState(() {
-                                usuarios.add(email);
-                              });
-                            } else {}
-                          },
-                          child: Icon(
-                            Icons.add,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Text(
-                    "Lista de integrantes : ",
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 300,
-                  child: ListView(
-                    children: [
-                      for (String user in usuarios)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 3.0),
-                          child: EmailList(email: user, onDelete: onDelete),
-                        ),
-                    ],
-                  ),
+                      "Criando um grupo você se torna o dono dele, podendo adicionar e remover pessoas do grupo, além de poder adicionar projetos ao grupo. Todos podem adicionar pessoar mas so o dono pode remover pessoas."),
                 ),
               ],
             ),
           ),
         ],
       ),
-    );
-  }
-
-  void onDelete(String email) {
-    deletedemail = email;
-    deletedemailpos = usuarios.indexOf(email);
-    setState(() {
-      usuarios.remove(email);
-    });
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-          content: Text(
-            "Tarefa $email foi removida com sucesso",
-            style: TextStyle(color: Colors.black),
-          ),
-          backgroundColor: Color(0xFFFFFAFF),
-          duration: Duration(seconds: 5),
-          action: SnackBarAction(
-            label: "Desfazer",
-            textColor: Color(0xFF30BCED),
-            onPressed: () {
-              setState(() {
-                usuarios.insert(deletedemailpos!, deletedemail!);
-              });
-            },
-          )),
     );
   }
 }
