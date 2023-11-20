@@ -115,7 +115,7 @@ class _GruposState extends State<Grupos> {
               ),
             ),
             Text(
-              "Ola $nome",
+              "Ola ${nome.toUpperCase()}",
               style: TextStyle(
                 fontSize: 18,
               ),
