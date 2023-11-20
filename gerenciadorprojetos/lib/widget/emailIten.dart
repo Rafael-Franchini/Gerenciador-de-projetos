@@ -20,7 +20,7 @@ class EmailList extends StatelessWidget {
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(20),
                   color: Colors.grey[200],
                 ),
                 padding: const EdgeInsets.symmetric(
@@ -33,7 +33,7 @@ class EmailList extends StatelessWidget {
                       child: Text(
                         email,
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                           color: Colors.grey[900],
                           fontWeight: FontWeight.bold,
                         ),
@@ -46,7 +46,7 @@ class EmailList extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.red,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
+                            borderRadius: BorderRadius.circular(20),
                           ),
                         ),
                         onPressed: () {

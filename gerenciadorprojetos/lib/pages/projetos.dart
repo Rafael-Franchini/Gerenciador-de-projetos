@@ -171,36 +171,6 @@ class _ProjetosState extends State<Projetos> {
             SizedBox(
               height: 10,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                SizedBox(
-                  height: 10,
-                  width: 10,
-                  child: Scaffold(
-                    backgroundColor: Color(0xff303036),
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text("Andamento"),
-                SizedBox(
-                  width: 10,
-                ),
-                SizedBox(
-                  height: 10,
-                  width: 10,
-                  child: Scaffold(
-                    backgroundColor: Color(0xff30BCED),
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text("Concluido"),
-              ],
-            ),
             SizedBox(
               height: 10,
             ),

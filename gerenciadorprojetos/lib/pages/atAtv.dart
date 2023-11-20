@@ -105,9 +105,16 @@ class _AtvTelaState extends State<AtvTela> {
                         texto: "Você não é o dono do grupo",
                         isErro: true);
                   }
+                } else {
+                  // ignore: use_build_context_synchronously
+                  mostrarSnackbar(
+                      context: context,
+                      texto: "Você não é o dono do grupo",
+                      isErro: true);
                 }
               },
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: const [Text("Deletar Tarefa"), Icon(Icons.delete)],
               ),
             ),

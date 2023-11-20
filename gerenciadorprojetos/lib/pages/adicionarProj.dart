@@ -162,7 +162,7 @@ class _CriaProjState extends State<CriaProj> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "Ao criar um projeto você se torna o dono do mesmo, Dentro dos projetos ficam as tarefas com nome descricao e quem esta com a tarefa",
+                    "Criando um projeto,porem somente o dono do grupo pode remover, Dentro dos projetos ficam as tarefas com nome,descrição e quem esta com a tarefa",
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         color: Color(0xff252525),

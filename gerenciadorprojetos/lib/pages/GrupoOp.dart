@@ -146,7 +146,7 @@ class _GrupoOPState extends State<GrupoOP> {
                           String nomeGr = g1.nome;
                           final Map<String, dynamic> data = {
                             'nomeGrupo': nomeGr,
-                            'usuarios': [email],
+                            'usuarios': [email.toLowerCase()],
                           };
 
                           const String apiUrl =

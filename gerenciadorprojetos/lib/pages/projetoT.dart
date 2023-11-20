@@ -175,9 +175,16 @@ class _ProjetoTState extends State<ProjetoT> {
                         texto: "Você não é o dono do grupo",
                         isErro: true);
                   }
+                } else {
+                  // ignore: use_build_context_synchronously
+                  mostrarSnackbar(
+                      context: context,
+                      texto: "Você não é o dono do grupo",
+                      isErro: true);
                 }
               },
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: const [Text("Deletar Projeto"), Icon(Icons.delete)],
               ),
             ),
