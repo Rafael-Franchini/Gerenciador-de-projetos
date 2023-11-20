@@ -4,9 +4,12 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:gerenciadorprojetos/models/tarefa.dart';
 import 'package:gerenciadorprojetos/pages/grupos.dart';
 import 'package:gerenciadorprojetos/pages/projetos.dart';
+import 'package:gerenciadorprojetos/widget/TarefaItem.dart';
 
+import '../_comum/meu_snackbar.dart';
 import '../models/grupo.dart';
 import '../models/projeto.dart';
 import '../rep-serv/authserv.dart';
@@ -25,12 +28,9 @@ class ProjetoT extends StatefulWidget {
 }
 
 class _ProjetoTState extends State<ProjetoT> {
-  String selectedValue = 'Opção 1';
   final UtilsRep utilsreps = UtilsRep();
   List<utils> util = [];
-  List<Projeto> projetoss = [];
-
-  void getTarefas() async {}
+  List<Tarefa> tarefas = [];
 
   @override
   void initState() {
@@ -38,8 +38,71 @@ class _ProjetoTState extends State<ProjetoT> {
     utilsreps.getutils().then((value) {
       setState(() {
         util = value;
+        getTarefas();
       });
     });
+  }
+
+  //ve se grupo ja nao existe na lista,para nao ocorrer ter duplicidade de grupos
+  bool verificarNome(List<Tarefa> grupos, String nome) {
+    for (int i = 0; i < grupos.length; i++) {
+      if (grupos[i].title == nome) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+//usa a funcao acima e se nao existir ele adiciona
+  void adicionarSeNaoExistir(List<Tarefa> grupos, Tarefa novoTeste) {
+    if (!verificarNome(grupos, novoTeste.title)) {
+      grupos.add(novoTeste);
+    }
+  }
+
+  //pega grupos da api e converte em map usa a funcao a cima para ver se ja nao existe na lista de grupos
+  void getTarefas() async {
+    String texto = "";
+    bool erro = false;
+    final Map<String, dynamic> data = {
+      'nome': widget.parametros1.nome,
+    };
+    const String apiUrl = "http://actionsolution.sytes.net:9000/tarefas/todas";
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {
+        'Content-Type': 'application/json',
+        'x-auth-token': util[0].token,
+      },
+      body: jsonEncode(data),
+    );
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonData = json.decode(response.body);
+      if (jsonData.containsKey('message')) {
+        final List<dynamic> gruposData = jsonData['message'];
+
+        // Agora você tem uma lista de objetos "doc" como Map<String, dynamic>
+        for (final docData in gruposData) {
+          // Acessar os campos individuais do objeto "doc"
+          final nome = docData["doc"]['titulo'];
+          final desc = docData["doc"]['descricao'];
+          final resp = docData["doc"]['atribuicao'];
+          // Faça o que você precisa com os campos do objeto "doc"
+          // ignore: non_constant_identifier_names
+          Tarefa Teste =
+              Tarefa(title: nome, descricao: desc, responsavel: resp);
+          adicionarSeNaoExistir(tarefas, Teste);
+        }
+      }
+    }
+    if (response.statusCode == 404) {
+      erro = true;
+      texto = "nao encontado nada";
+      // ignore: use_build_context_synchronously
+      mostrarSnackbar(context: context, texto: texto, isErro: erro);
+    }
+    setState(() {});
   }
 
   @override
@@ -97,14 +160,21 @@ class _ProjetoTState extends State<ProjetoT> {
                     },
                     body: jsonEncode(data),
                   );
-                  print(response.body);
-                  // ignore: use_build_context_synchronously
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Grupos(),
-                    ),
-                  );
+                  if (response.statusCode == 200) {
+                    // ignore: use_build_context_synchronously
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => Grupos(),
+                      ),
+                    );
+                  } else {
+                    // ignore: use_build_context_synchronously
+                    mostrarSnackbar(
+                        context: context,
+                        texto: "Você não é o dono do grupo",
+                        isErro: true);
+                  }
                 }
               },
               child: Row(
@@ -141,6 +211,27 @@ class _ProjetoTState extends State<ProjetoT> {
                   "Atribuir Tarefa",
                   style: TextStyle(fontWeight: FontWeight.w900),
                 ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              width: 600,
+              height: 0.99 / 1.8 * MediaQuery.of(context).size.height,
+              child: ListView(
+                children: [
+                  if (tarefas.isNotEmpty)
+                    for (Tarefa grupo in tarefas)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 3.0),
+                        child: TarefaItem(
+                          nome: grupo,
+                          parametrosg: widget.parametros2,
+                          parametrosp: widget.parametros1,
+                        ),
+                      ),
+                ],
               ),
             ),
           ],

@@ -108,8 +108,16 @@ class _CriaGrupoState extends State<CriaGrupo> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 18.0),
-                  child: Text(
-                      "Criando um grupo você se torna o dono dele, podendo adicionar e remover pessoas do grupo, além de poder adicionar projetos ao grupo. Todos podem adicionar pessoar mas so o dono pode remover pessoas."),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Criando um grupo você se torna o dono dele, podendo adicionar e remover pessoas do grupo, além de poder adicionar projetos ao grupo. Todos podem adicionar pessoar mas so o dono pode remover pessoas.",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xff252525),
+                          fontSize: 20),
+                    ),
+                  ),
                 ),
               ],
             ),

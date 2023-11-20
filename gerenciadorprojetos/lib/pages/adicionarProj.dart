@@ -3,13 +3,17 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:gerenciadorprojetos/pages/projetos.dart';
 import 'package:http/http.dart' as http; //faz conexao
 import '../_comum/meu_snackbar.dart';
+import '../models/grupo.dart';
 import '../rep-serv/authserv.dart';
 
+// ignore: must_be_immutable
 class CriaProj extends StatefulWidget {
-  const CriaProj({super.key, required this.parametros});
+  CriaProj({super.key, required this.parametros, required this.parametros2});
 
+  Grupo parametros2;
   final Map<String, dynamic> parametros;
 
   @override
@@ -90,14 +94,20 @@ class _CriaProjState extends State<CriaProj> {
                     );
                     if (response.statusCode == 200) {
                       // ignore: use_build_context_synchronously
-                      Navigator.of(context).pushNamed("/Projetos");
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Projetos(
+                            parametros: widget.parametros2,
+                          ),
+                        ),
+                      );
                     } else {
                       // ignore: use_build_context_synchronously
                       mostrarSnackbar(
                           context: context, texto: "${response.statusCode}");
                     }
                     // ignore: use_build_context_synchronously
-                    Navigator.of(context).pushNamed("/Projetos");
                   } else {
                     // ignore: use_build_context_synchronously
                     mostrarSnackbar(
@@ -145,6 +155,19 @@ class _CriaProjState extends State<CriaProj> {
                     labelText: "Descrição do Projeto",
                   ),
                   controller: descricao,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Ao criar um projeto você se torna o dono do mesmo, Dentro dos projetos ficam as tarefas com nome descricao e quem esta com a tarefa",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xff252525),
+                        fontSize: 20),
+                  ),
                 ),
               ],
             ),

@@ -27,6 +27,9 @@ class GrupoList extends StatelessWidget {
                       child: SizedBox(
                         height: 50,
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF30BCED),
+                          ),
                           onPressed: () {
                             Grupo parametros = nome;
                             Navigator.push(

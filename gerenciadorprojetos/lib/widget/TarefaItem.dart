@@ -3,11 +3,20 @@
 import 'package:flutter/material.dart';
 import 'package:gerenciadorprojetos/pages/atAtv.dart';
 
+import '../models/grupo.dart';
+import '../models/projeto.dart';
 import '../models/tarefa.dart';
 
-class GrupoList extends StatelessWidget {
-  const GrupoList({Key? key, required this.nome}) : super(key: key);
+class TarefaItem extends StatelessWidget {
+  const TarefaItem(
+      {Key? key,
+      required this.nome,
+      required this.parametrosg,
+      required this.parametrosp})
+      : super(key: key);
   final Tarefa nome;
+  final Projeto parametrosp;
+  final Grupo parametrosg;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +28,7 @@ class GrupoList extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(4),
-                  color: Colors.grey[200],
+                  color: Colors.grey[900],
                 ),
                 child: Row(
                   children: [
@@ -27,13 +36,19 @@ class GrupoList extends StatelessWidget {
                       child: SizedBox(
                         height: 70,
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF30BCED),
+                          ),
                           onPressed: () {
                             Tarefa parametros = nome;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    AtvTela(parametros: parametros),
+                                builder: (context) => AtvTela(
+                                  parametros: parametros,
+                                  parametrosg: parametrosg,
+                                  parametrosp: parametrosp,
+                                ),
                               ),
                             );
                           },
@@ -49,6 +64,7 @@ class GrupoList extends StatelessWidget {
                               ),
                               Text(nome.descricao,
                                   style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
                                     fontSize: 15,
                                     color: Color(0xFFFFFAFF),
                                     fontWeight: FontWeight.normal,

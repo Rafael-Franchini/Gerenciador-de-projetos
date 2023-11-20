@@ -33,6 +33,9 @@ class ProjList extends StatelessWidget {
                       child: SizedBox(
                         height: 70,
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF30BCED),
+                          ),
                           onPressed: () {
                             Projeto parametros = nome;
                             Grupo parametros2 = nome2;
@@ -58,6 +61,7 @@ class ProjList extends StatelessWidget {
                               Text(
                                 nome.descricao,
                                 style: TextStyle(
+                                  overflow: TextOverflow.ellipsis,
                                   fontSize: 10,
                                   color: Color(0xFFFFFAFF),
                                   fontWeight: FontWeight.bold,

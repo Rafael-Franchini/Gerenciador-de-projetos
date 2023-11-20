@@ -236,7 +236,8 @@ class _GrupoOPState extends State<GrupoOP> {
         usuarios.remove(email);
       });
     } else {
-      mostrarSnackbar(context: context, texto: "Você não é o dono do grupo");
+      mostrarSnackbar(
+          context: context, texto: "Você não é o dono do grupo", isErro: true);
     }
   }
 }

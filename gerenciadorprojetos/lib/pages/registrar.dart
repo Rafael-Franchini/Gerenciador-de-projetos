@@ -151,7 +151,7 @@ class _LoginScreenState extends State<Registrar> {
     if (pass.isNotEmpty && email.isNotEmpty && nome.isNotEmpty) {
       final Map<String, dynamic> data = {
         'nome': nome,
-        'email': email,
+        'email': email.toLowerCase(),
         'senha': pass,
       };
 

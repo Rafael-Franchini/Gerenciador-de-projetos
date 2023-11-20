@@ -218,7 +218,10 @@ class _ProjetosState extends State<Projetos> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => CriaProj(parametros: parametros),
+                      builder: (context) => CriaProj(
+                        parametros: parametros,
+                        parametros2: widget.parametros,
+                      ),
                     ),
                   );
                 },
@@ -227,6 +230,9 @@ class _ProjetosState extends State<Projetos> {
                   style: TextStyle(fontWeight: FontWeight.w900),
                 ),
               ),
+            ),
+            SizedBox(
+              height: 20,
             ),
             SizedBox(
               width: 300,

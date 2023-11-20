@@ -99,7 +99,7 @@ class _TelaLoginState extends State<TelaLogin> {
                       String email = emails.text;
                       if (pass.isNotEmpty && email.isNotEmpty) {
                         final Map<String, dynamic> data = {
-                          'email': email,
+                          'email': email.toLowerCase(),
                           'senha': pass,
                         };
 

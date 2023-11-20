@@ -18,6 +18,7 @@ class _GruposState extends State<Grupos> {
   final UtilsRep utilsreps = UtilsRep();
   List<utils> util = [];
   List<Grupo> grupos = [];
+  String nome = "Usuario";
 
   @override
   void initState() {
@@ -27,6 +28,7 @@ class _GruposState extends State<Grupos> {
         util = value;
         // pega grupos existentes ao iniciar tela
         getGrupos();
+        nome = util[0].nome;
       });
     });
   }
@@ -113,7 +115,7 @@ class _GruposState extends State<Grupos> {
               ),
             ),
             Text(
-              "Ola ${util[0].nome}",
+              "Ola $nome",
               style: TextStyle(
                 fontSize: 18,
               ),
