@@ -96,16 +96,17 @@ class _LoginScreenState extends State<Registrar> {
                       ),
                     ),
                     onPressed: registrar,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 104.0,
-                        vertical: 15,
-                      ),
-                      child: Text(
-                        'Registrar-se',
-                        style: TextStyle(
-                          color: Color(0xFFFFFAFF),
-                          fontSize: 20,
+                    child: SizedBox(
+                      height: 55,
+                      width: 1.5 / 2 * MediaQuery.of(context).size.width,
+                      child: Center(
+                        child: Text(
+                          'Registrar-se',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFFFFFAFF),
+                            fontSize: 20,
+                          ),
                         ),
                       ),
                     ),

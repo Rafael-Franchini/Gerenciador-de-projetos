@@ -131,16 +131,17 @@ class _TelaLoginState extends State<TelaLogin> {
                         }
                       }
                     },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 94.0,
-                        vertical: 15,
-                      ),
-                      child: Text(
-                        'Login',
-                        style: TextStyle(
-                          color: Color(0xFFFFFAFF),
-                          fontSize: 20,
+                    child: SizedBox(
+                      height: 55,
+                      width: 1.5 / 2 * MediaQuery.of(context).size.width,
+                      child: Center(
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                            color: Color(0xFFFFFAFF),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
                         ),
                       ),
                     ),
