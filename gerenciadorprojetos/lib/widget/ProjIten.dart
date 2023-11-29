@@ -31,7 +31,7 @@ class ProjList extends StatelessWidget {
                   children: [
                     Expanded(
                       child: SizedBox(
-                        height: 70,
+                        height: 60,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Color(0xFF30BCED),
@@ -48,26 +48,29 @@ class ProjList extends StatelessWidget {
                               ),
                             );
                           },
-                          child: Column(
-                            children: [
-                              Text(
-                                nome.nome.toUpperCase(),
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Color(0xFFFFFAFF),
-                                  fontWeight: FontWeight.bold,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  nome.nome.toUpperCase(),
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Color(0xFFFFFAFF),
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                nome.descricao,
-                                style: TextStyle(
-                                  overflow: TextOverflow.ellipsis,
-                                  fontSize: 10,
-                                  color: Color(0xFFFFFAFF),
-                                  fontWeight: FontWeight.bold,
+                                Text(
+                                  nome.descricao,
+                                  style: TextStyle(
+                                    overflow: TextOverflow.ellipsis,
+                                    fontSize: 10,
+                                    color: Color(0xFFFFFAFF),
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),

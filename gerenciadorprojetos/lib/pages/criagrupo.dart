@@ -64,7 +64,9 @@ class _CriaGrupoState extends State<CriaGrupo> {
                   if (response.statusCode == 200) {
                     // ignore: use_build_context_synchronously
                     mostrarSnackbar(
-                        context: context, texto: "grupo criado com sucesso");
+                        context: context,
+                        texto: "grupo criado com sucesso",
+                        isErro: false);
                     // ignore: use_build_context_synchronously
                     Navigator.of(context).pushNamed("/grupos");
                   } else {
@@ -111,7 +113,7 @@ class _CriaGrupoState extends State<CriaGrupo> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      "Criando um grupo você se torna o dono dele, podendo adicionar e remover pessoas do grupo, além de poder adicionar projetos ao grupo. Todos podem adicionar pessoar mas so o dono pode remover pessoas.",
+                      "Ao criar um grupo você se torna responsável por ele, poderá adicionar e remover os membros, além de poder adicionar projetos ao grupo.\nObs: Todos os participantes podem adicionar membros,mas só o responsável pode remove-los",
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Color(0xff252525),

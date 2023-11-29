@@ -132,11 +132,13 @@ class _AtvTelaState extends State<AtvTela> {
             SizedBox(
               height: 300,
               width: 300,
-              child: Text(
-                t.descricao,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Color(0xff252525),
+              child: Center(
+                child: Text(
+                  t.descricao,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Color(0xff252525),
+                  ),
                 ),
               ),
             ),

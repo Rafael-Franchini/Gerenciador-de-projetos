@@ -162,7 +162,7 @@ class _GruposState extends State<Grupos> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 72.0,
+                horizontal: 52.0,
                 vertical: 12,
               ),
               child: ElevatedButton(
@@ -174,6 +174,7 @@ class _GruposState extends State<Grupos> {
                 },
                 child: SizedBox(
                   height: 45,
+                  width: 1.55 / 2 * MediaQuery.of(context).size.width,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
@@ -211,6 +212,16 @@ class _GruposState extends State<Grupos> {
                           nome: grupo,
                         ),
                       ),
+                  if (grupos.isEmpty)
+                    Center(
+                      child: Text(
+                        "Nenhum grupo encontrado",
+                        style: TextStyle(
+                          color: Color(0xffFC5130),
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),

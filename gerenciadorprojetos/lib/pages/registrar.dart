@@ -98,10 +98,10 @@ class _LoginScreenState extends State<Registrar> {
                     onPressed: registrar,
                     child: SizedBox(
                       height: 55,
-                      width: 1.5 / 2 * MediaQuery.of(context).size.width,
+                      width: 1.3 / 2 * MediaQuery.of(context).size.width,
                       child: Center(
                         child: Text(
-                          'Registrar-se',
+                          'Registrar',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Color(0xFFFFFAFF),

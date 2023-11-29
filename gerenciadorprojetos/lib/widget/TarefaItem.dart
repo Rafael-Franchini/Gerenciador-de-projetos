@@ -52,30 +52,33 @@ class TarefaItem extends StatelessWidget {
                               ),
                             );
                           },
-                          child: Column(
-                            children: [
-                              Text(
-                                nome.title,
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Color(0xFFFFFAFF),
-                                  fontWeight: FontWeight.bold,
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  nome.title,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Color(0xFFFFFAFF),
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                              Text(nome.descricao,
-                                  style: TextStyle(
-                                    overflow: TextOverflow.ellipsis,
-                                    fontSize: 15,
-                                    color: Color(0xFFFFFAFF),
-                                    fontWeight: FontWeight.normal,
-                                  )),
-                              Text(nome.responsavel,
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    color: Color(0xFFFFFAFF),
-                                    fontWeight: FontWeight.normal,
-                                  )),
-                            ],
+                                Text(nome.descricao,
+                                    style: TextStyle(
+                                      overflow: TextOverflow.ellipsis,
+                                      fontSize: 15,
+                                      color: Color(0xFFFFFAFF),
+                                      fontWeight: FontWeight.normal,
+                                    )),
+                                Text(nome.responsavel,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Color(0xFFFFFAFF),
+                                      fontWeight: FontWeight.normal,
+                                    )),
+                              ],
+                            ),
                           ),
                         ),
                       ),

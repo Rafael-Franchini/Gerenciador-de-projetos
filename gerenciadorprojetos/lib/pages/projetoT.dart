@@ -135,7 +135,7 @@ class _ProjetoTState extends State<ProjetoT> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -191,7 +191,8 @@ class _ProjetoTState extends State<ProjetoT> {
             Text(
               "Descrição: ",
               style: TextStyle(
-                fontWeight: FontWeight.w500,
+                fontSize: 16,
+                fontWeight: FontWeight.w900,
               ),
             ),
             Text(widget.parametros1.descricao),
@@ -238,6 +239,16 @@ class _ProjetoTState extends State<ProjetoT> {
                           parametrosp: widget.parametros1,
                         ),
                       ),
+                  if (tarefas.isEmpty)
+                    Center(
+                      child: Text(
+                        "Nenhuma tarefa encontrada",
+                        style: TextStyle(
+                          color: Color(0xffFC5130),
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),

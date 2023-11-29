@@ -174,8 +174,8 @@ class _ProjetosState extends State<Projetos> {
             SizedBox(
               height: 10,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50.0),
+            SizedBox(
+              width: 0.85 / 2 * MediaQuery.of(context).size.width,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Color(0xff30BCED),
@@ -218,6 +218,16 @@ class _ProjetosState extends State<Projetos> {
                           nome2: g1,
                         ),
                       ),
+                  if (projetoss.isEmpty)
+                    Center(
+                      child: Text(
+                        "Nenhum projeto encontrado",
+                        style: TextStyle(
+                          color: Color(0xffFC5130),
+                          fontSize: 16,
+                        ),
+                      ),
+                    ),
                 ],
               ),
             ),
