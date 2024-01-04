@@ -12,6 +12,7 @@ import 'package:gerenciadorprojetos/widget/TarefaItem.dart';
 import '../_comum/meu_snackbar.dart';
 import '../models/grupo.dart';
 import '../models/projeto.dart';
+import '../rep-serv/apilink.dart';
 import '../rep-serv/authserv.dart';
 import 'CriaAtv.dart';
 import 'package:http/http.dart' as http; //faz conexao
@@ -31,7 +32,7 @@ class _ProjetoTState extends State<ProjetoT> {
   final UtilsRep utilsreps = UtilsRep();
   List<utils> util = [];
   List<Tarefa> tarefas = [];
-
+  Api api = Api();
   @override
   void initState() {
     super.initState();
@@ -67,7 +68,7 @@ class _ProjetoTState extends State<ProjetoT> {
     final Map<String, dynamic> data = {
       'nome': widget.parametros1.nome,
     };
-    const String apiUrl = "http://actionsolution.sytes.net:9000/tarefas/todas";
+    String apiUrl = api.getTarefas();
 
     final response = await http.post(
       Uri.parse(apiUrl),
@@ -149,8 +150,7 @@ class _ProjetoTState extends State<ProjetoT> {
                     'grupo': g1.nome,
                     'projeto': g2.nome,
                   };
-                  const String apiUrl =
-                      "http://actionsolution.sytes.net:9000/grupos/remover/projeto";
+                  String apiUrl =api.removerProjeto();
 
                   final response = await http.post(
                     Uri.parse(apiUrl),

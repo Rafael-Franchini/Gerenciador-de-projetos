@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:gerenciadorprojetos/_comum/meu_snackbar.dart';
+import 'package:gerenciadorprojetos/rep-serv/apilink.dart';
 import 'package:http/http.dart' as http;
 
 class Registrar extends StatefulWidget {
@@ -15,7 +16,7 @@ class _LoginScreenState extends State<Registrar> {
   final TextEditingController nomes = TextEditingController();
   final TextEditingController emails = TextEditingController();
   final TextEditingController senhas = TextEditingController();
-
+  Api api = Api();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -156,8 +157,7 @@ class _LoginScreenState extends State<Registrar> {
         'senha': pass,
       };
 
-      const String apiUrl =
-          "http://actionsolution.sytes.net:9000/usuarios/novo";
+       String apiUrl =api.registrar();
 
       final response = await http.post(
         Uri.parse(apiUrl),

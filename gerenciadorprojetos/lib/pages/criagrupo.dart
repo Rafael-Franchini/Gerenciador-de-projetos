@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../_comum/meu_snackbar.dart';
+import '../rep-serv/apilink.dart';
 import '../rep-serv/authserv.dart';
 
 class CriaGrupo extends StatefulWidget {
@@ -19,7 +20,7 @@ class _CriaGrupoState extends State<CriaGrupo> {
   final TextEditingController emailG = TextEditingController();
   final UtilsRep utilsreps = UtilsRep();
   List<utils> util = [];
-
+  Api api = Api();
   @override
   void initState() {
     super.initState();
@@ -49,8 +50,7 @@ class _CriaGrupoState extends State<CriaGrupo> {
                     'usuarios': '',
                   };
 
-                  const String apiUrl =
-                      "http://actionsolution.sytes.net:9000/grupos/novo";
+                  String apiUrl =api.criarGrupo();
 
                   final response = await http.post(
                     Uri.parse(apiUrl),

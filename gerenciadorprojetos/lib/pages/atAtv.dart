@@ -8,6 +8,7 @@ import 'package:gerenciadorprojetos/pages/projetoT.dart';
 import 'package:http/http.dart' as http; //faz conexao
 import '../_comum/meu_snackbar.dart';
 import '../models/projeto.dart';
+import '../rep-serv/apilink.dart';
 import '../rep-serv/authserv.dart';
 import '../models/tarefa.dart';
 
@@ -29,7 +30,7 @@ class AtvTela extends StatefulWidget {
 class _AtvTelaState extends State<AtvTela> {
   final UtilsRep utilsreps = UtilsRep();
   List<utils> util = [];
-
+  Api api = Api();
   @override
   void initState() {
     super.initState();
@@ -77,8 +78,7 @@ class _AtvTelaState extends State<AtvTela> {
                     'tarefa': widget.parametros.title,
                     'projeto': widget.parametrosp.nome,
                   };
-                  const String apiUrl =
-                      "http://actionsolution.sytes.net:9000/tarefas/remover/tarefa";
+                  String apiUrl =api.removerTarefa();
 
                   final response = await http.post(
                     Uri.parse(apiUrl),

@@ -7,6 +7,7 @@ import 'package:gerenciadorprojetos/pages/projetos.dart';
 import 'package:http/http.dart' as http; //faz conexao
 import '../_comum/meu_snackbar.dart';
 import '../models/grupo.dart';
+import '../rep-serv/apilink.dart';
 import '../rep-serv/authserv.dart';
 
 // ignore: must_be_immutable
@@ -28,7 +29,7 @@ class _CriaProjState extends State<CriaProj> {
   int? deletedemailpos;
   List<String> usuarios = [];
   List<utils> util = [];
-
+  Api api=Api();
   @override
   void initState() {
     super.initState();
@@ -58,8 +59,7 @@ class _CriaProjState extends State<CriaProj> {
                     'dono': util[0].email,
                   };
 
-                  const String apiUrl =
-                      "http://actionsolution.sytes.net:9000/projetos/novo";
+                  String apiUrl =api.criarProjeto();
 
                   final response = await http.post(
                     Uri.parse(apiUrl),
@@ -81,8 +81,7 @@ class _CriaProjState extends State<CriaProj> {
                       'projeto': nomeGr,
                     };
 
-                    const String apiUrl =
-                        "http://actionsolution.sytes.net:9000/grupos/adicionar/projeto";
+                    String apiUrl =api.adicionarProjeto();
 
                     final response = await http.post(
                       Uri.parse(apiUrl),

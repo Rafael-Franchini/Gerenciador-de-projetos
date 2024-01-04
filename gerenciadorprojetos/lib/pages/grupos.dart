@@ -5,6 +5,7 @@ import 'package:gerenciadorprojetos/_comum/meu_snackbar.dart'; //mensagem embaix
 import 'package:gerenciadorprojetos/widget/gruposItens.dart'; //widget grupo
 import 'package:http/http.dart' as http; //faz conexao
 import '../models/grupo.dart';
+import '../rep-serv/apilink.dart';
 import '../rep-serv/authserv.dart';
 
 class Grupos extends StatefulWidget {
@@ -19,6 +20,7 @@ class _GruposState extends State<Grupos> {
   List<utils> util = [];
   List<Grupo> grupos = [];
   String nome = "Usuario";
+  Api api = Api();
 
   @override
   void initState() {
@@ -57,7 +59,7 @@ class _GruposState extends State<Grupos> {
     final Map<String, dynamic> data = {
       'email': util[0].email,
     };
-    const String apiUrl = "http://actionsolution.sytes.net:9000/grupos/todos";
+    String apiUrl = api.getGrupos();
 
     final response = await http.post(
       Uri.parse(apiUrl),

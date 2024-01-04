@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 
 import '../_comum/meu_snackbar.dart';
 import '../models/grupo.dart';
+import '../rep-serv/apilink.dart';
 import '../rep-serv/authserv.dart';
 import '../widget/emailIten.dart';
 
@@ -25,7 +26,7 @@ class _GrupoOPState extends State<GrupoOP> {
   final TextEditingController emailG = TextEditingController();
   final UtilsRep utilsreps = UtilsRep();
   List<utils> util = [];
-
+  Api api = Api();
   @override
   void initState() {
     super.initState();
@@ -58,8 +59,7 @@ class _GrupoOPState extends State<GrupoOP> {
     final Map<String, dynamic> data = {
       'grupo': g1.nome,
     };
-    const String apiUrl =
-        "http://actionsolution.sytes.net:9000/grupos/todos/usuarios";
+    String apiUrl =api.getUsers();
 
     final response = await http.post(
       Uri.parse(apiUrl),
@@ -150,8 +150,7 @@ class _GrupoOPState extends State<GrupoOP> {
                             'usuarios': [emailw],
                           };
 
-                          const String apiUrl =
-                              "http://actionsolution.sytes.net:9000/grupos/adicionar/usuario";
+                          String apiUrl = api.adicionarUser();
 
                           final response = await http.post(
                             Uri.parse(apiUrl),
@@ -214,8 +213,7 @@ class _GrupoOPState extends State<GrupoOP> {
         'usuarios': [email],
       };
 
-      const String apiUrl =
-          "http://actionsolution.sytes.net:9000/grupos/remover/usuario";
+      String apiUrl = api.removerUser() ;
 
       final response = await http.post(
         Uri.parse(apiUrl),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gerenciadorprojetos/_comum/meu_snackbar.dart';
 import 'package:http/http.dart' as http;
 
+import '../rep-serv/apilink.dart';
 import '../rep-serv/authserv.dart';
 
 class TelaLogin extends StatefulWidget {
@@ -15,6 +16,7 @@ class TelaLogin extends StatefulWidget {
 
 class _TelaLoginState extends State<TelaLogin> {
   final TextEditingController emails = TextEditingController();
+  Api api = Api();
 
   final TextEditingController senhas = TextEditingController();
 
@@ -103,8 +105,7 @@ class _TelaLoginState extends State<TelaLogin> {
                           'senha': pass,
                         };
 
-                        const String apiUrl =
-                            "http://actionsolution.sytes.net:9000/auth/login";
+                        String apiUrl = api.login();//link api
 
                         final response = await http.post(
                           Uri.parse(apiUrl),

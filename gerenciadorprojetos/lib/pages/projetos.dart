@@ -8,6 +8,7 @@ import 'package:gerenciadorprojetos/widget/ProjIten.dart';
 import 'package:http/http.dart' as http; //faz conexao
 import '../_comum/meu_snackbar.dart';
 import '../models/projeto.dart';
+import '../rep-serv/apilink.dart';
 import '../rep-serv/authserv.dart';
 
 class Projetos extends StatefulWidget {
@@ -23,7 +24,7 @@ class _ProjetosState extends State<Projetos> {
   final UtilsRep utilsreps = UtilsRep();
   List<utils> util = [];
   List<Projeto> projetoss = [];
-
+  Api api = Api();
   @override
   void initState() {
     super.initState();
@@ -60,7 +61,7 @@ class _ProjetosState extends State<Projetos> {
       "grupo": g1.nome,
       'usuario': util[0].email,
     };
-    const String apiUrl = "http://actionsolution.sytes.net:9000/projetos/todos";
+    String apiUrl = api.getProjetos();
 
     final response = await http.post(
       Uri.parse(apiUrl),

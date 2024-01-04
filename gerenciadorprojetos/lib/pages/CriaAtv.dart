@@ -7,6 +7,7 @@ import 'package:gerenciadorprojetos/pages/projetoT.dart';
 import 'package:http/http.dart' as http; //faz conexao
 import '../models/grupo.dart';
 import '../models/projeto.dart';
+import '../rep-serv/apilink.dart';
 import '../rep-serv/authserv.dart';
 
 class CriaAtv extends StatefulWidget {
@@ -26,7 +27,7 @@ class _CriaAtvState extends State<CriaAtv> {
   TextEditingController responsavel = TextEditingController();
   final UtilsRep utilsreps = UtilsRep();
   List<utils> util = [];
-
+  Api api = Api();
   @override
   void initState() {
     super.initState();
@@ -67,8 +68,7 @@ class _CriaAtvState extends State<CriaAtv> {
                     "atribuicao": responsavel.text,
                     "projeto": widget.parametros1.nome,
                   };
-                  const String apiUrl =
-                      "http://actionsolution.sytes.net:9000/tarefas/adicionar/tarefa";
+                  String apiUrl =api.criarTarefa();
 
                   final response = await http.post(
                     Uri.parse(apiUrl),
