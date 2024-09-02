@@ -13,3 +13,6 @@ Flutter: Para o desenvolvimento do aplicativo Android.
 Node.js: Utilizado para criar a API que gerencia e processa os dados.
 Banco de Dados: Armazenado em uma máquina física para garantir segurança e integridade dos dados.
 
+### Contribuidores
+
+- API desenvolvida por [@francisco-newton](https://github.com/francisco-newton)
