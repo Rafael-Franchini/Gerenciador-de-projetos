@@ -9,6 +9,10 @@ Criação e Gestão de Grupos: Crie grupos de trabalho e adicione participantes.
 Gerenciamento de Projetos: Dentro de cada grupo, organize projetos, como o desenvolvimento de um jogo, e defina tarefas.
 Atribuição e Monitoramento de Tarefas: As tarefas podem ser atribuídas aos membros do grupo, permitindo o monitoramento do progresso e identificação dos responsáveis.
 
+### Resultado
+
+https://github.com/user-attachments/assets/3a5fa9ce-9ec6-41c9-9178-57cce7a71860
+
 ### Tecnologias Utilizadas:
 - Flutter: Para o desenvolvimento do aplicativo Android.
 - Node.js: Utilizado para criar a API que gerencia e processa os dados.
